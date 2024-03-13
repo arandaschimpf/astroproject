@@ -1,8 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
-// <!--  el nombre de este archivo esta de esta manera porque su id es dinamico -->
+import ImageCard from "../components/ImageCard.astro";
+const id = Astro.params.id ?? "1";
 ---
 
-<Layout>
-  <h1>{id}</h1>
+<Layout title="Pagina">
+  <ImageCard id={id} />
 </Layout>
