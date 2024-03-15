@@ -79,6 +79,8 @@
         }
         if (count <= 0) {
           clearInterval(interval);
+          button.classList.toggle("clicked");
+          playPause ? (playPause.innerHTML = "Start") : null;
           alert("The timer has finished");
         }
       }, 1000);
