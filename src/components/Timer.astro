@@ -1,23 +1,89 @@
-<h1>Timer</h1>
+<!-- <h1 class=".start-button">Timer</h1> -->
+<div class="circle">
+  <h1 class="timer"></h1>
+  <div class="start-button">
+    <!-- <button class="play-pause"></button> -->
+    <button class="play-pause"></button>
+  </div>
+</div>
 
-<style></style>
+<style>
+  .timer {
+    font-size: 50px;
+    color: #ffffff;
+    margin-bottom: 5px;
+  }
+  .circle {
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    border-width: 4px;
+    color: #ffffff;
+    border-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    width: 500px;
+    height: 500px;
+  }
+  .start-button {
+    font-size: 20px;
+    color: #ffffff;
+    transition: all 0.5s;
+  }
+  .clicked {
+    transform: translate(0px, 50px);
+  }
+  body {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    /* vh es viewport height y el 100 es el porcentaje*/
+    margin: 0;
+    background-color: #000000;
+  }
+  .play-pause {
+    /* transition: all 0.5s; */
+  }
+</style>
 
 <script>
-  const button = document.querySelector('.start-button')
-  const timer = document.querySelector('.timer')
-  button?.addEventListener('click', () => {
-    let count = 60 * 5
-    const interval = setInterval(() => {
-      count--
-      const minutes = Math.floor(count / 60).toString().padStart(2, '0')
-      const seconds = (count % 60).toString().padStart(2, '0')
-      const text = `${minutes}:${seconds}`
-      if (timer) {
-        timer.innerHTML = text
-      }
-      if (count <= 0) {
-        clearInterval(interval)
-      }
-    }, 1000)
-  })
+  const button = document.querySelector(".start-button");
+  const timer = document.querySelector(".timer");
+  const playPause = document.querySelector(".play-pause");
+  let running = false;
+  let interval: number;
+  timer ? (timer.innerHTML = "05:00") : null;
+  playPause ? (playPause.innerHTML = "Start") : null;
+  let count = 0;
+  button?.addEventListener("click", () => {
+    button.classList.toggle("clicked");
+    if (count <= 0) {
+      count = 60 * 5;
+    }
+    if (running) {
+      running = !running;
+      playPause ? (playPause.innerHTML = "Start") : null;
+      clearInterval(interval);
+    } else {
+      interval = setInterval(() => {
+        count--;
+        const minutes = Math.floor(count / 60)
+          .toString()
+          .padStart(2, "0");
+        const seconds = (count % 60).toString().padStart(2, "0");
+        const text = `${minutes}:${seconds}`;
+        if (timer) {
+          timer.innerHTML = text;
+        }
+        if (count <= 0) {
+          clearInterval(interval);
+          alert("The timer has finished");
+        }
+      }, 1000);
+      running = !running;
+      playPause ? (playPause.innerHTML = "Stop") : null;
+    }
+  });
 </script>
