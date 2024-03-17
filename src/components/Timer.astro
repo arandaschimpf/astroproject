@@ -1,23 +1,43 @@
-<h1>Timer</h1>
+<section class = "card">
+  <div class = "timer-container">
+    <a class = "timer">00:00</a>
+  </div>
+  <div class = "button-container">
+    <button class = "start-button">Start</button>
+    <button class = "stop-button">Stop</button>
+    <button class = "reset-button">Reset</button>
+  </div>
+</section>
 
-<style></style>
-
-<script>
-  const button = document.querySelector('.start-button')
+<script class = "timer-script">
+  const startButton = document.querySelector('.start-button')
+  const stopButton = document.querySelector('.stop-button')
+  const resetButton = document.querySelector('.reset-button')
   const timer = document.querySelector('.timer')
-  button?.addEventListener('click', () => {
-    let count = 60 * 5
-    const interval = setInterval(() => {
-      count--
-      const minutes = Math.floor(count / 60).toString().padStart(2, '0')
-      const seconds = (count % 60).toString().padStart(2, '0')
-      const text = `${minutes}:${seconds}`
-      if (timer) {
-        timer.innerHTML = text
-      }
+
+  let interval; 
+
+  startButton?.addEventListener('click', () => {
+    let count = 60 * 5;
+    interval = setInterval(() => { 
+      count--;
+      const minutes = Math.floor(count / 60).toString().padStart(2, '0');
+      const seconds = (count % 60).toString().padStart(2, '0');
+      const text = `${minutes}:${seconds}`;
+      timer.innerHTML = text;
       if (count <= 0) {
-        clearInterval(interval)
+        clearInterval(interval);
       }
-    }, 1000)
-  })
+    }, 1000);
+  });
+
+  stopButton?.addEventListener('click', () => {
+    clearInterval(interval);
+  });
+
+  resetButton?.addEventListener('click', () => {  
+    clearInterval(interval); 
+    count = 60 * 5; 
+    timer.innerHTML = `${Math.floor(count / 60).toString().padStart(2, '0')}:${(count % 60).toString().padStart(2, '0')}`;
+  });
 </script>
