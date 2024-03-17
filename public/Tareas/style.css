@@ -1,0 +1,84 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.Nombre {
+    font-size: 40px;
+    color: #c21212;
+    align-items: start;
+    justify-content: end;
+}
+.sfbg {
+    background: #141414;
+    height: 69px;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin:auto; /* Ajusta este valor según sea necesario */
+}
+
+.heading {
+    margin-top: 0;
+}
+.Top {
+    font-size: 40px;
+    color: #fff;
+    align-items: start;
+    justify-content: start;
+}
+
+.timer {
+    font-size: 40px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.play,
+.pause {
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: #000;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 10px;
+    margin: 5px; /* Elimina el margen entre los botones */
+    text-decoration: none;
+    display: inline-flex; /* Cambiado de 'flex' a 'inline-flex' */
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+
+.restart{
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: #000;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 10px;
+    margin: 5px;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+}

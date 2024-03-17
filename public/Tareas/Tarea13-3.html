@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div style="margin-top:-20px" class="sfbg">
+      <h1 class="Top">
+          Tarea 13-3-24
+      </h1>
+      <h2 class="Nombre">
+        Fabricio Pereira
+      </h2>
+    </div>
+    <div class="container">
+      <h1 class="heading">Timer</h1>
+      <h2 class="timer">05:00</h2>
+      <button class="play">Play</button>
+      <button class="pause">Pause</button>
+      <button class="restart">Restart</button>
+    </div>
+
+    <script>
+      let interval; // Variable para almacenar el intervalo del temporizador
+      let count = 60 * 5; // 5 minutos en segundos
+      const timer = document.querySelector('.timer');
+      const playButton = document.querySelector('.play');
+      const pauseButton = document.querySelector('.pause');
+      const restartButton = document.querySelector('.restart')
+
+      function playTimer() {
+        interval = setInterval(() => {
+          count--;
+          const minutes = Math.floor(count / 60).toString().padStart(2, '0'); // Calcula los minutos
+          const seconds = (count % 60).toString().padStart(2, '0'); // Calcula los segundos restantes
+          const text = `${minutes}:${seconds}`; // Formatea el tiempo como MM:SS
+          if (timer) {
+            timer.innerHTML = text; // Actualiza la visualización del temporizador
+          }
+          if (count <= 0) {
+            clearInterval(interval); // Detiene el temporizador cuando llega a 0
+          }
+        }, 1000); // Actualiza cada segundo
+      }
+      function pauseTimer() {
+        clearInterval(interval); // Pausa el temporizador
+      }
+      function restartTimer() {
+        count = 60 * 5; // Reinicia el contador a 5 minutos en segundos
+        timer.innerHTML = "05:00"; // Actualiza la visualización del temporizador
+      }
+      playButton.addEventListener('click', playTimer);
+      pauseButton.addEventListener('click', pauseTimer);
+      restartButton.addEventListener('click', restartTimer);
+
+    </script>
+
+  </body>
+</html>
