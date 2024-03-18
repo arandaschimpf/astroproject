@@ -1,23 +1,104 @@
-<h1>Timer</h1>
+<div class="container">
+  <div class="timer">00:00:00</div>
+  <div class="buttons">
+    <button class="start-stop" onclick="startStop()">Start</button>
+    <button class="reset" onclick="resetTimer()">Reset</button>
+  </div>
+</div>
 
-<style></style>
+<style>
+  body {
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .container {
+    position: relative;
+    width: 350px; 
+    height: 300px;
+    border-radius: 50%;
+    border: 5px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+  }
+
+  .timer {
+    font-size: 36px;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .start-stop, .reset {
+    width: 100px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    margin: 0 5px;
+  }
+
+  
+</style>
 
 <script>
-  const button = document.querySelector('.start-button')
-  const timer = document.querySelector('.timer')
-  button?.addEventListener('click', () => {
-    let count = 60 * 5
-    const interval = setInterval(() => {
-      count--
-      const minutes = Math.floor(count / 60).toString().padStart(2, '0')
-      const seconds = (count % 60).toString().padStart(2, '0')
-      const text = `${minutes}:${seconds}`
-      if (timer) {
-        timer.innerHTML = text
+  let timer;
+  let isRunning = false;
+  let seconds = 0;
+  let minutes = 0;
+  let hours = 0;
+
+  function startStop() {
+    if (!isRunning) {
+      timer = setInterval(updateTimer, 1000);
+      isRunning = true;
+      document.querySelector('.start-stop').textContent = 'Stop';
+    } else {
+      clearInterval(timer);
+      isRunning = false;
+      document.querySelector('.start-stop').textContent = 'Start';
+    }
+  }
+
+  function resetTimer() {
+    clearInterval(timer);
+    isRunning = false;
+    seconds = 0;
+    minutes = 0;
+    hours = 0;
+    document.querySelector('.timer').textContent = '00:00:00';
+    document.querySelector('.start-stop').textContent = 'Start';
+  }
+
+  function updateTimer() {
+    seconds++;
+    if (seconds === 60) {
+      seconds = 0;
+      minutes++;
+      if (minutes === 60) {
+        minutes = 0;
+        hours++;
       }
-      if (count <= 0) {
-        clearInterval(interval)
-      }
-    }, 1000)
-  })
+    }
+    const formattedTime = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+    document.querySelector('.timer').textContent = formattedTime;
+  }
+
+  function pad(value) {
+    return value < 10 ? '0' + value : value;
+  }
 </script>
