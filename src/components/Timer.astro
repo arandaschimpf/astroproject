@@ -1,23 +1,182 @@
-<h1>Timer</h1>
+<div class="main-container center">
+  <div class="progressbar-container center">
+    <div class="semi-circle"></div>
+    <div class="semi-circle"></div>
+    <div class="semi-circle"></div>
+    <div class="outmost-circle"></div>
+  
+  </div>
+   <div class="timer-container ">
+     <div class="timer center"></div> 
+    <!-- <img class="image" src="/stopwatch.jpg"> -->  
+    <button class="start-button center">ButtonTimer</button> 
+  
+  </div> 
+</div>
 
-<style></style>
+
+<style>
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .main-container{
+    width: 100%;
+    height: 100vh;
+    background-color: black;
+  }
+
+  .timer-container{
+    width: 330px;
+    height: 200px;
+    z-index: 6;
+  }
+
+   .timer {
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 4rem;
+    color: white;
+    font-weight: 800;   
+  } 
+
+  .center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* body {
+    display: flex;
+    background-color: black;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  } */
+
+  /* .image {
+    height: 100px;
+    width: 100px;   
+  } */
+
+  .start-button{
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    /* margin-top: 50px; */
+    position: absolute;
+    left: 265px;
+  }
+
+  .progressbar-container{
+    background-color: white;
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    border-radius: 50%;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .semi-circle {
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform-origin: left center;
+  }
+  .semi-circle:nth-child(1){
+    background-color: blue;
+    z-index: 2;
+  }
+  .semi-circle:nth-child(2){
+    background-color: cadetblue;
+    z-index: 3;
+  }
+  
+  .semi-circle:nth-child(3){
+    background-color: white;
+    z-index: 4;
+    
+    /* display: none; */
+  }
+
+  .outmost-circle {
+    width: 390px;
+    height: 390px;
+    background-color: black;
+    border-radius: 50%;
+    z-index: 5;
+  }
+/* 
+   .progressbar-container:hover .semi-circle:nth-child(1){
+    transform: rotate(-180deg);
+    transition: 1s linear;
+    
+  }
+
+  .progressbar-container:hover .semi-circle:nth-child(2){
+    transform: rotate(-360deg);
+    transition: 2s linear;
+    
+  }
+
+  .progressbar-container:hover .semi-circle:nth-child(3){
+    opacity: 0;
+    transition: 0s 1s;
+    
+  }  */
+
+
+  
+</style>
 
 <script>
-  const button = document.querySelector('.start-button')
-  const timer = document.querySelector('.timer')
+  const button = document.querySelector('.start-button');
+
+  const timer = document.querySelector('.timer');
+  const semicircles = document.querySelectorAll('.semi-circle');
+
+  timer.innerHTML = "05:00";
+
   button?.addEventListener('click', () => {
-    let count = 60 * 5
+    let count = 60 * 5;
+    let hh = 360; 
+    const jj = 360 / (60 * 5);
     const interval = setInterval(() => {
-      count--
-      const minutes = Math.floor(count / 60).toString().padStart(2, '0')
-      const seconds = (count % 60).toString().padStart(2, '0')
-      const text = `${minutes}:${seconds}`
+      count--;
+
+      
+      const minutes = Math.floor(count / 60).toString().padStart(2, '0');
+      const seconds = (count % 60).toString().padStart(2, '0');
+      const text = `${minutes}:${seconds}`;
       if (timer) {
-        timer.innerHTML = text
+        timer.innerHTML = text;
       }
+    
+      hh -= jj;
+      if(hh <= 180){
+        (semicircles[2] as HTMLElement).style.display = `none`;
+        (semicircles[0] as HTMLElement).style.transform = `rotate(${hh}deg)`;
+        (semicircles[0] as HTMLElement).style.transitionDuration = `1s `;
+
+      }
+      else{
+        (semicircles[0] as HTMLElement).style.transform = `rotate(${hh}deg)`;
+        (semicircles[1] as HTMLElement).style.transform = `rotate(${hh}deg)`;
+        (semicircles[0] as HTMLElement).style.transitionDuration = `1s `;
+        (semicircles[1] as HTMLElement).style.transitionDuration = `1s `;
+      }
+      
+
       if (count <= 0) {
-        clearInterval(interval)
+        clearInterval(interval);
+        alert("It's over my friend");
       }
-    }, 1000)
-  })
+    }, 1000);
+  });
 </script>
