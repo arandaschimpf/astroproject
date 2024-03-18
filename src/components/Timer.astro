@@ -1,23 +1,69 @@
+---
+  //const timer = document.querySelector('.timer')
+---
+
 <h1>Timer</h1>
 
-<style></style>
+<div class="container-timer">
+  <div class="timer">
+    <!-- -->
+  
+  
+  </div>
+  <button class="start-button">INICIO</button>
+
+
+</div>
+
+
+<style>
+  .timer{
+    font-size: 24px;
+
+
+  }
+
+  .start-button{
+    font-size: 12px;
+    justify-content: center;
+
+  }
+
+  .container-timer{
+    background-color: aqua;
+    border-radius: 20px;
+    height: auto;
+    border-style: 20px;
+  }
+
+
+
+
+
+</style>
+
+
+
 
 <script>
-  const button = document.querySelector('.start-button')
-  const timer = document.querySelector('.timer')
-  button?.addEventListener('click', () => {
-    let count = 60 * 5
-    const interval = setInterval(() => {
-      count--
-      const minutes = Math.floor(count / 60).toString().padStart(2, '0')
-      const seconds = (count % 60).toString().padStart(2, '0')
-      const text = `${minutes}:${seconds}`
-      if (timer) {
-        timer.innerHTML = text
-      }
-      if (count <= 0) {
-        clearInterval(interval)
-      }
-    }, 1000)
-  })
+      const button = document.querySelector('.start-button')
+      const timer = document.querySelector('.timer')
+      button?.addEventListener('click', () => {
+        let count = 60 * 5
+        const interval = setInterval(() => {
+          count--
+          const minutes = Math.floor(count / 60).toString().padStart(2, '0')
+          const seconds = (count % 60).toString().padStart(2, '0')
+          const text = `${minutes}:${seconds}`
+          if (timer) {
+            timer.innerHTML = text // esto para cambiar el texto del div -> innerHTML
+          }
+          if (count <= 0) {
+            clearInterval(interval)
+          }
+        }, 1000)
+      })
+
+
+
 </script>

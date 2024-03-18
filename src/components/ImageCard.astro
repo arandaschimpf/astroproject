@@ -1,4 +1,6 @@
 ---
+//import Timer from '../components/Timer.astro'
+
 type Props = {
   id: string
 }
@@ -30,8 +32,12 @@ const title = titles[id]
 </section>
 
 <script>
+  const id = Astro.props.id
+
+
   const imagen = document.querySelector('.image')
-  imagen.addEventListener('click', () => {
-    alert('Click')
-  })
+  if (imagen !== null) [
+    imagen.addEventListener('click', () => {
+      alert('Click')
+  })]
 </script>
