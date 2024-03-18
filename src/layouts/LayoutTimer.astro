@@ -1,0 +1,71 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<header>
+<h1 class="title"> TIMER </h1>
+</header>
+<body>
+    <slot/>
+</body>
+</html>
+
+<style is:inline>
+    header{
+        background-color: rgb(5, 32, 56);
+        height: 50px;
+        width: 100%;
+        margin-bottom: 50px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+    body {
+        
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+        background-color: rgb(5, 16, 27);
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .start-button{
+        margin-top: 25px;
+        display: inline-block;   
+        background-color: rgba(5, 16, 48, 0.692);
+        color: aliceblue;
+        padding: 30px 30px;
+        border-radius: 50%;
+        font-family: 'Courier New', Courier;
+        font-size: 20px;
+        margin-bottom: 25px;
+    }
+
+.timer{
+    font-family: 'Courier New', Courier;
+    font-size: 20px;
+    color: aliceblue;
+      
+}
+
+.title{
+    font-family: 'Courier New', Courier;
+    font-size: 40px;
+    color: aliceblue;    
+}
+
+
+
+</style>
