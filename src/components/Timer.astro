@@ -1,12 +1,29 @@
-<h1>Timer</h1>
 
-<style></style>
+
+<section class="card">
+  <h1>Timer</h1>
+  <div class="timer">
+    <div class="imput-container">
+        <p id="texto1">Segundos</p>
+        <form>
+            <input type="number" class="input-timer">
+        </form>   
+      </div>    
+  </div>
+  <div class="menu" >
+            
+    <a class="stop">| |</a>
+    <a class="play">&gt;</a>
+  </div>
+  
+</section>
 
 <script>
-  const button = document.querySelector('.start-button')
+  const button = document.querySelector('.play')
   const timer = document.querySelector('.timer')
   button?.addEventListener('click', () => {
-    let count = 60 * 5
+    let input: HTMLInputElement | null = document.querySelector('.input-timer') as HTMLInputElement;
+    let count: number | null = input ? parseInt(input.value) : null;
     const interval = setInterval(() => {
       count--
       const minutes = Math.floor(count / 60).toString().padStart(2, '0')
@@ -19,5 +36,11 @@
         clearInterval(interval)
       }
     }, 1000)
+    const boton = document.querySelector('.stop') as HTMLElement
+    boton.addEventListener('click',() => {
+        clearInterval(interval)
+    })
   })
+
+  
 </script>
