@@ -1,6 +1,81 @@
-<h1>Timer</h1>
 
-<style></style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Timer</title>
+  <link rel="stylesheet">
+</head>
+<body>
+    <h1>Timer Mayco</h1>
+  <div class="timer-container">
+    <div class="timer">
+      <span class="minutes">05</span>:<span class="seconds">00</span>
+    </div>
+  </div>
+  <button class="start-button">Start</button>
+</body>
+</html>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #d82d2d;
+  } 
+  
+  .timer-container {
+    position: relative;
+  }
+  
+  .timer {
+    font-size: 4rem;
+    width: 200px;
+    height: 200px;
+    line-height: 200px;
+    text-align: center;
+    color: #ffffff;
+    border-radius: 50%;
+    border: 5px solid #ffffff;
+    background-color: #682828;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .timer .minutes,
+  .timer .seconds {
+    display: inline-block;
+  }
+  
+  .start-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    background-color: #000000;
+    color: #fcfcfc;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .start-button:hover {
+    background-color: #6481a1;
+  }
+  h1 {
+    font-size: 2rem;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+</style>
 
 <script>
   const button = document.querySelector('.start-button')
