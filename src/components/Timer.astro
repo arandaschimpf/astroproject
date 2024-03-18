@@ -1,23 +1,48 @@
-<h1>Timer</h1>
 
-<style></style>
+---
+type Props = {
+  id: string
+}
+
+const id = Astro.props.id
+---
+
+<section class="card">
+  <h1 class="timer">05:00</h1>
+  <div class="division">
+    <button class="start-button">Start</button>
+    <button class="stop-button">Stop</button>
+  </div>
+
+
+</section>
 
 <script>
   const button = document.querySelector('.start-button')
   const timer = document.querySelector('.timer')
+  const stop = document.querySelector('.stop-button')
   button?.addEventListener('click', () => {
     let count = 60 * 5
     const interval = setInterval(() => {
+
       count--
       const minutes = Math.floor(count / 60).toString().padStart(2, '0')
       const seconds = (count % 60).toString().padStart(2, '0')
       const text = `${minutes}:${seconds}`
-      if (timer) {
+      if(timer){
         timer.innerHTML = text
       }
+
       if (count <= 0) {
         clearInterval(interval)
       }
+      stop?.addEventListener('click', () => {
+        clearInterval(interval)
+        timer.innerHTML = '05:00'
+      })
+
     }, 1000)
+ 
   })
+  
 </script>
