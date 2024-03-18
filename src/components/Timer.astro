@@ -2,18 +2,24 @@
   <title>Temporizador de 5 minutos</title>
 </head>
 <body>
+  <header>Adriel San Martin</header>
+
   <h1>Temporizador (5 minutos)</h1>
 
   <div class="timer-container">
     <div class="timer"></div>
   </div>
 
-  <button class="start-button">Comenzar</button>
+  <div class="button-container">
+    <button class="start-button">Comenzar</button>
+    <button class="restart-button">Reiniciar</button>
+  </div>
 </body>
 
 <style>
-  body {
-    background-color: lightgray;
+  .bg-zinc-200 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(224 255 255 / var(--tw-bg-opacity));
   }
 
   h1 {
@@ -21,13 +27,13 @@
     font-size: 40px;
     text-align: center;
     margin-bottom: 20px;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: "Courier New", Courier, monospace;
     font-weight: bold;
   }
 
   .start-button {
     background-color: green;
-    color: white;
+    color: black;
     border: none;
     border-radius: 10px;
     padding: 10px 20px;
@@ -37,6 +43,10 @@
 
   .start-button:hover {
     background-color: darkgreen;
+  }
+
+  .start-button.disabled:hover {
+    background-color: green;
   }
 
   .timer-container {
@@ -56,24 +66,78 @@
     text-align: center;
     color: darkred;
   }
+
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .restart-button {
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .restart-button:hover {
+    background-color: darkred;
+  }
+
+  .button-container {
+  display: flex;
+    gap: 10px;
+  }
 </style>
 
 <script>
-  const button = document.querySelector('.start-button')
-  const timer = document.querySelector('.timer')
-  button?.addEventListener('click', () => {
-    let count = 60 * 5
-    const interval = setInterval(() => {
-      count--
-      const minutes = Math.floor(count / 60).toString().padStart(2, '0')
-      const seconds = (count % 60).toString().padStart(2, '0')
-      const text = `${minutes}:${seconds}`
-      if (timer) {
-        timer.innerHTML = text
-      }
-      if (count <= 0) {
-        clearInterval(interval)
-      }
-    }, 1000)
-  })
+  const button = document.querySelector(".start-button") as HTMLButtonElement;
+  const button2 = document.querySelector(".restart-button",) as HTMLButtonElement;
+  const timer = document.querySelector(".timer");
+  let interval: NodeJS.Timeout | null = null;
+  let count = 60 * 5;
+
+  button?.addEventListener("click", () => {
+    button.disabled = true;
+    button.classList.add("disabled");
+    clearInterval(interval as NodeJS.Timeout);
+    interval = setInterval(() => {
+    count--;
+    const minutes = Math.floor(count / 60)
+      .toString()
+      .padStart(2, "0");
+    const seconds = (count % 60).toString().padStart(2, "0");
+    const text = `${minutes}:${seconds}`;
+    if (timer) {
+      timer.innerHTML = text;
+    }
+    if (count <= 0) {
+      clearInterval(interval as NodeJS.Timeout);
+      button.disabled = false;
+      button.classList.remove("disabled");
+    }
+    }, 1000);
+  });
+
+  button2?.addEventListener("click", () => {
+    clearInterval(interval as NodeJS.Timeout);
+    count = 60 * 5;
+    const minutes = Math.floor(count / 60)
+      .toString()
+      .padStart(2, "0");
+    const seconds = (count % 60).toString().padStart(2, "0");
+    const text = `${minutes}:${seconds}`;
+    if (timer) {
+      timer.innerHTML = text;
+    }
+    button.disabled = false;
+    button.classList.remove("disabled");
+  });
 </script>
