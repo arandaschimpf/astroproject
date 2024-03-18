@@ -1,23 +1,114 @@
-<h1>Timer</h1>
+<h3>Timer</h3>
 
-<style></style>
+<style>
+  .timer-container {
+    
+    text-align: center;
+    margin-top: 100px; /* Aumenta el margen superior */
+    padding: 70px; /* Aumenta el espacio interno */
+    background-color: #ccfcf6; /* Cambia el color de fondo */
+    position: relative; /*para que los botones queden abajo??*/
+    border-radius: 50px;
+  }
+
+  .timer {
+    font-size: 60px;
+    color: #333;
+    background-color: #f4f4f4;
+    padding: 40px 50px;
+    border-radius: 20px;
+    display: block;
+  }
+
+  .button {
+    padding: 20px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 50%; /* Botón redondo */
+    cursor: pointer;
+    position: absolute; /*pa lo relative*/ 
+    width: 100px; /* Ancho fijo */
+    height: 70px; /* Alto fijo */
+    
+  }
+
+  .start-button {
+    background-color: #d9f00a;
+    color: #fff;
+    left: 70px; /* Cambio de "right: 0;" a "left: 0;" */
+    margin-bottom: 20px;
+  }
+
+ 
+
+  .action-buttons button.restart{
+    /*margin: 0 10px;*/
+    background-color: #d01ee8;
+    color: #fff;
+  }
+
+  .action-buttons button.pause{
+    /*margin: 0 10px;*/
+    background-color: #20bacb;
+    color: #fff;
+  }
+
+  
+</style>
+
+<div class="timer-container">
+  <div class="timer">05:00</div>
+  <button class="button start-button" style="display: block;">Start</button>
+  <div class="action-buttons" style="display: none;">
+    
+    <button class="button pause" >Pause</button>
+    <button class="button restart">Restart</button>
+  </div>
+</div>
 
 <script>
-  const button = document.querySelector('.start-button')
-  const timer = document.querySelector('.timer')
-  button?.addEventListener('click', () => {
-    let count = 60 * 5
-    const interval = setInterval(() => {
-      count--
-      const minutes = Math.floor(count / 60).toString().padStart(2, '0')
-      const seconds = (count % 60).toString().padStart(2, '0')
-      const text = `${minutes}:${seconds}`
-      if (timer) {
-        timer.innerHTML = text
-      }
+  const timerContainer = document.querySelector('.timer-container');
+  const timer = document.querySelector('.timer');
+  const startButton = document.querySelector('.start-button');
+  const restartButton = document.querySelector('.restart');
+  const pauseButton = document.querySelector('.pause');
+  let count = 60 * 5;
+  let interval;
+
+  const updateTimer = () => {
+    const minutes = Math.floor(count / 60).toString().padStart(2, '0');
+    const seconds = (count % 60).toString().padStart(2, '0');
+    const text = `${minutes}:${seconds}`;
+    timer.innerHTML = text;
+  };
+
+  const startTimer = () => {
+    startButton.style.display = 'none';
+    pauseButton.style.display = 'block';
+    document.querySelector('.action-buttons').style.display = 'block';
+    interval = setInterval(() => {
+      count--;
+      updateTimer();
       if (count <= 0) {
-        clearInterval(interval)
+        clearInterval(interval);
       }
-    }, 1000)
-  })
+    }, 1000);
+  };
+
+  startButton?.addEventListener('click', startTimer);
+
+  restartButton?.addEventListener('click', () => {
+    clearInterval(interval);
+    count = 60 * 5;
+    updateTimer();
+    startButton.style.display = 'none';
+    pauseButton.style.display = 'block';
+    startTimer();
+  });
+
+  pauseButton?.addEventListener('click', () => {
+    clearInterval(interval);
+    startButton.style.display = 'block';
+    pauseButton.style.display = 'none';
+  });
 </script>
