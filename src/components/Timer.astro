@@ -1,23 +1,81 @@
-<h1>Timer</h1>
+<img class="img1" src="clock3.jpg" style="width: 350px; height: auto;">
+<h1 class="timer">Timer</h1>
+<section>
+  <button class="start-button">START</button>
+</section>
+<title>Timer</title>
+<style>
+  body {
+      background-color: #282525;
+      color: #141313;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-image: url('backMountains.jpeg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
 
-<style></style>
+    .img-container {
+      background-color: #444;
+    }
+
+    .img1 {
+      width: 300px;
+      height: auto;
+    }
+
+    .timer {
+      font-size: 4em;
+      margin-top: 20px;
+      text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+      color: white; 
+    }
+
+    .start-button {
+      color: white;
+      border: none;
+      font-size: 2em;
+      cursor: pointer;
+      transition: background-color 0.5s ease;
+    }
+
+    .start-button:hover {
+      text-shadow: 5px 5px 7px rgba(0, 0, 0, 0.5);
+    }
+</style>
+</head>
+<body>
 
 <script>
-  const button = document.querySelector('.start-button')
-  const timer = document.querySelector('.timer')
+  const button = document.querySelector('.start-button') as HTMLButtonElement;
+  const timer = document.querySelector('.timer');
   button?.addEventListener('click', () => {
-    let count = 60 * 5
+    let count = 60 * 5;
+    button.disabled = true;
     const interval = setInterval(() => {
-      count--
-      const minutes = Math.floor(count / 60).toString().padStart(2, '0')
-      const seconds = (count % 60).toString().padStart(2, '0')
-      const text = `${minutes}:${seconds}`
+      count--;
+      const minutes = Math.floor(count / 60).toString().padStart(2, '0');
+      const seconds = (count % 60).toString().padStart(2, '0');
+      const text = `${minutes}:${seconds}`;
       if (timer) {
-        timer.innerHTML = text
+        timer.innerHTML = text;
       }
       if (count <= 0) {
-        clearInterval(interval)
+        clearInterval(interval);
+        const finished = document.querySelector('.timer')
+        if(finished != null){
+          finished.innerHTML = "Timer finished"
+        }
+        //alert("Timer finished...");
+        setTimeout(() => {
+          button.disabled = false;
+        }, 1000);
       }
-    }, 1000)
-  })
+    }, 1000); 
+  });
 </script>
+</body>
+</html>
