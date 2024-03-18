@@ -1,7 +1,86 @@
 ---
 import Layout from "../layouts/Layout.astro"
 ---
-
+<head>
+  <link rel="stylesheet" href="/path/to/styles.css">
+</head>
 <Layout title="Page">
-  <h1>Hola mundo</h1>
+  <head>
+    <style>
+     body {
+      font-family: Arial;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #temporizador {
+      color: rgb(10, 10, 10);
+      font-size: 24px;
+    }
+    h2{
+      font-size: 70px;
+    }
+
+    button {
+      background-color: rgb(108, 116, 108);
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      margin: 5px;
+    }
+
+    .botones-container {
+      margin-top: 20px; /* Espacio entre el temporizador y los botones */
+    }
+  </style>
+
+  <h2>Timer</h2>
+  <div id="temporizador">05:00</div>
+  <div class="botones-container">
+    <button onclick="iniciarTemporizador()">Iniciar</button>
+    <button onclick="detenerTemporizador()">Detener</button>
+  </div>
+  
+  <script lang="ts">
+    var temporizador;
+    let segundos = 0;
+    let minutos = 5;
+    let horas = 0;
+  
+    function actualizarTemporizador() {
+      segundos--;
+      if (segundos < 0) {
+        segundos = 59;
+        minutos--;
+        if (minutos < 0) {
+          minutos = 59;
+          horas--;
+          if (horas < 0) {
+            detenerTemporizador();
+            alert("Terminado");
+            return;
+          }
+        }
+      }
+      document.getElementById("temporizador").innerHTML = formatTime(horas) + ":" + formatTime(minutos) + ":" + formatTime(segundos);
+    }
+  
+    function formatTime(time) {
+      return time < 10 ? "0" + time : time;
+    }
+  
+    function iniciarTemporizador() {
+      temporizador = setInterval(actualizarTemporizador, 1000);
+    }
+  
+    function detenerTemporizador() {
+      clearInterval(temporizador);
+    }
+  </script>
+  
 </Layout>
