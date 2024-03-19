@@ -1,23 +1,119 @@
-<h1>Timer</h1>
 
-<style></style>
+<section class="reloj">
+  <div class="timer">1:00</div>
+  <div class="buttons">
+    <a href="#" class="reset-button" style="display: none;">⟳</a>
+    <a href="#" class="start-button">►</a>
+    <a href="#" class="stop-button" style="display: none;">❚❚</a>
+  </div>
+</section>
+
+
+<style>
+
+
+.reloj {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra horizontalmente */
+}
+
+.timer {
+  width: 200px; /* Ancho del temporizador */
+  height: 200px; /* Altura del temporizador */
+  border-radius: 50%; /* Hace que el temporizador sea circular */
+  background-color: rgb(72, 52, 26); /* Color de fondo */
+  color: white; /* Color de texto */
+  font-size: 50px; /* Tamaño de la fuente del temporizador */
+  text-align: center; /* Centra el texto horizontalmente */
+  line-height: 200px; /* Centra el texto verticalmente */
+  margin-bottom: 20px; /* Añade un margen inferior */
+}
+
+.buttons {
+  display: flex;
+}
+
+.buttons a {
+  flex: 1; /* Hace que los botones se expandan para llenar el espacio */
+  margin: 0 10px; /* Añade un espacio entre los botones */
+  padding: 10px 20px; /* Ajusta el relleno de los botones */
+  border-radius: 5px; /* Hace que los botones tengan esquinas redondeadas */
+  text-decoration: none; /* Quita el subrayado predeterminado */
+  text-align: center; /* Centra el texto horizontalmente */
+  font-size: 18px; /* Tamaño de la fuente de los botones */
+  background-color: rgb(72, 52, 26); /* Color de fondo de los botones */
+  color: white; /* Color de texto de los botones */
+}
+</style>
 
 <script>
-  const button = document.querySelector('.start-button')
-  const timer = document.querySelector('.timer')
-  button?.addEventListener('click', () => {
-    let count = 60 * 5
-    const interval = setInterval(() => {
-      count--
-      const minutes = Math.floor(count / 60).toString().padStart(2, '0')
-      const seconds = (count % 60).toString().padStart(2, '0')
-      const text = `${minutes}:${seconds}`
-      if (timer) {
-        timer.innerHTML = text
-      }
+  const buttonStart = document.querySelector('.start-button');
+  const buttonReset = document.querySelector('.reset-button');
+  const buttonStop = document.querySelector('.stop-button');
+  const timer = document.querySelector('.timer');
+  let count = 60*5;
+  let interval;
+
+  const updateTime = () => {
+    const minutes = Math.floor(count / 60).toString().padStart(2, '0');
+    const seconds = (count % 60).toString().padStart(2, '0');
+    const text = `${minutes}:${seconds}`;
+    if (timer) {
+      timer.innerHTML = text;
+    }
+    if (count <= 0) {
+      timer.style.backgroundColor = 'white'; // Cambia el color del temporizador a rojo
+      timer.style.color = 'rgb(72, 52, 26)';
+
+    }
+  };
+
+  const startTimer = () => {
+    buttonStart.style.display = 'none'; // Ocultar el botón de COMENZAR
+    buttonReset.style.display = 'inline'; // Mostrar el botón de REINICIAR
+    buttonStop.style.display = 'inline'; // Mostrar el botón de DETENER
+    interval = setInterval(() => {
+      count--;
+      updateTime();
       if (count <= 0) {
-        clearInterval(interval)
+        clearInterval(interval);
       }
-    }, 1000)
-  })
+    }, 1000);
+  };
+
+  const stopTimer = () => {
+    buttonStart.style.display = 'inline'; // Mostrar el botón de COMENZAR
+    buttonReset.style.display = 'inline'; // Mostrar el botón de REINICIAR
+    buttonStop.style.display = 'none'; // Ocultar el botón de DETENER
+    clearInterval(interval);
+  };
+
+  const resetTimer = () => {
+    buttonStart.style.display = 'inline'; // Mostrar el botón de COMENZAR
+    buttonReset.style.display = 'none'; // Mostrar el botón de REINICIAR
+    buttonStop.style.display = 'none'; // Ocultar el botón de DETENER
+    count = 60*5; // Restablecer el contador a 2 minutos (120 segundos)
+    updateTime(); // Actualizar el tiempo mostrado
+    timer.style.backgroundColor = 'rgb(72, 52, 26)';
+    timer.style.color = 'white';
+
+
+  };
+
+  updateTime(); // Inicializar el temporizador
+
+  buttonStart?.addEventListener('click', () => {
+    startTimer();
+  });
+
+  buttonReset?.addEventListener('click', () => {
+    stopTimer();
+    resetTimer();
+
+  });
+
+  buttonStop?.addEventListener('click', () => {
+    stopTimer();
+  });
 </script>
