@@ -1,9 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro"
-import ImageCard from '../components/ImageCard.astro'
-const id = Astro.params.id ?? '1'
+import Timer from '../components/Timer.astro'
 ---
 
-<Layout title="Pagina">
-  <ImageCard id={id}/>
+<Layout title="Temporizador">
+  <Timer />
 </Layout>

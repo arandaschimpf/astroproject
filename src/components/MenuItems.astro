@@ -1,0 +1,56 @@
+<style>
+    .menu {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: white;
+        border-width: 0.5px;
+        border-color: #cbd5e0;
+        border-radius: 0.25rem;
+        height: 3.5rem;
+        padding: 0 1rem;
+    }
+
+    .menu-text {
+        color: #6d6d6d;
+        font-size: 1rem;
+        font-weight: 500;
+        line-height: 2.25rem;
+    }
+
+    .menu-buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    .menu-button {
+        background-color: transparent;
+        border: none;
+        color: #6d6d6d;
+        font-size: 1rem;
+        font-weight: 500;
+        line-height: 1.5rem;
+        margin-right: 1rem;
+        cursor: pointer;
+    }
+
+    .menu-button:last-child {
+        margin-right: 0;
+    }
+
+    .menu-clear {
+        color: #6d6d6d;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+</style>
+
+<div class="menu w-full h-16">
+    <span class="menu-text">3 items left</span>
+    <div class="menu-buttons">
+        <button class="menu-button">All</button>
+        <button class="menu-button">Active</button>
+        <button class="menu-button">Completed</button>
+    </div>
+    <span class="menu-clear">clear completed</span>
+</div>
