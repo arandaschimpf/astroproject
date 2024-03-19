@@ -1,0 +1,15 @@
+---
+import Layout from "../layouts/Layout.astro"
+import TaskList from '../components/TaskList.astro'
+import CheckBoxList from '../components/CheckBoxList.astro'
+import MenuItems from '../components/MenuItems.astro'
+---
+
+<Layout title="Lista de Tareas">
+    <h1 class="text-6xl font-bold text-red-600 text-opacity-15">todos</h1>
+    <div class="w-half-screen h-30 drop-shadow-2xl">
+        <TaskList />
+        <CheckBoxList />
+        <MenuItems/>
+    </div>
+</Layout>

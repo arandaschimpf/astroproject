@@ -1,0 +1,81 @@
+<style>
+    .checkbox-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .checkbox-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0; 
+        background-color: white;
+        border-width: 0.5px;
+        border-color: #cbd5e0be;
+        border-radius: 0.25rem;
+        height: 3.5rem; 
+    }
+
+    .checkbox-box {
+        width: 1.5rem;
+        height: 1.5rem;
+        border: 1.5px solid #cbd5e0;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 0.75rem; 
+        margin-left: 1.25rem; 
+        position: relative; 
+    }
+
+    .checkbox-box::after {
+        content: "\2713"; 
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1rem; 
+        color: #42bce1; 
+        opacity: 0; 
+    }
+
+    .checkbox-text {
+        color: rgb(47, 47, 47);
+        font-size: 1.875rem; 
+        line-height: 2.25rem; 
+    }
+
+    .checkbox-item input[type="checkbox"]:checked + .checkbox-box {
+        background-color: white;
+    }
+
+    .checkbox-item input[type="checkbox"]:checked + .checkbox-box::after {
+        opacity: 1; 
+    }
+
+    .checkbox-item input[type="checkbox"]:checked + .checkbox-box + .checkbox-text {
+        color: #d0d5da;
+        text-decoration: line-through;
+    }
+</style>
+
+<div class="checkbox-list">
+    <label class="checkbox-item w-full h-16">
+        <input type="checkbox" class="hidden" />
+        <span class="checkbox-box"></span>
+        <span class="checkbox-text">Go Shoping</span>
+    </label>
+    <label class="checkbox-item w-full h-16">
+        <input type="checkbox" class="hidden" />
+        <span class="checkbox-box"></span>
+        <span class="checkbox-text">Refactor Backend</span>
+    </label>
+    <label class="checkbox-item w-full h-16">
+        <input type="checkbox" class="hidden" />
+        <span class="checkbox-box"></span>
+        <span class="checkbox-text">Add new feature app</span>
+    </label>
+    <label class="checkbox-item w-full h-16">
+        <input type="checkbox" class="hidden" />
+        <span class="checkbox-box"></span>
+        <span class="checkbox-text">Todo1</span>
+    </label>
+</div>
