@@ -1,23 +1,63 @@
-<h1>Timer</h1>
+<h1></h1>
 
 <style></style>
 
-<script>
-  const button = document.querySelector('.start-button')
-  const timer = document.querySelector('.timer')
-  button?.addEventListener('click', () => {
-    let count = 60 * 5
-    const interval = setInterval(() => {
-      count--
-      const minutes = Math.floor(count / 60).toString().padStart(2, '0')
-      const seconds = (count % 60).toString().padStart(2, '0')
-      const text = `${minutes}:${seconds}`
-      if (timer) {
-        timer.innerHTML = text
-      }
-      if (count <= 0) {
-        clearInterval(interval)
-      }
-    }, 1000)
-  })
+<script defer>
+    let intervalo;
+    let tiempoRestante = 5 * 60 ; // Tiempo inicial en segundos
+    let temporizadorActivo = false;
+
+    // Función para actualizar el temporizador
+    function actualizarTemporizador() {
+        const timerElement = document.getElementById('timer');
+        const minutos = Math.floor(tiempoRestante / 60);
+        const segundos = Math.floor(tiempoRestante % 60);
+        const milisegundos = Math.floor((tiempoRestante % 1) * 1000 );
+
+        timerElement.textContent = formatearTiempo(minutos, segundos, milisegundos.toString().slice(0, 2));
+
+        if (tiempoRestante === 0) {
+            alert('¡El temporizador ha terminado!');
+            clearInterval(intervalo);
+            intervalo = undefined;
+            document.getElementById('startButton').textContent = 'Iniciar';
+            temporizadorActivo = false;
+        } else {
+            tiempoRestante -= 1 / 60;
+        }
+    }
+
+    // Función para formatear el tiempo en formato hh:mm:ss
+    function formatearTiempo(minutos, segundos, milisegundos) {
+milisegundos = milisegundos.toString().padStart(2, '0'); // Asegurar que siempre haya dos dígitos para los milisegundos
+return `${minutos < 10 ? '0' : ''}${minutos}:${segundos < 10 ? '0' : ''}${segundos}:${milisegundos}`;
+}
+
+    // Función para iniciar o detener el temporizadorr
+    function controlarTemporizador() {
+        const boton = document.getElementById('startButton');
+
+        if (!temporizadorActivo) {
+            intervalo = setInterval(actualizarTemporizador, 100);
+            boton.textContent = 'Detener';
+        } else {
+            clearInterval(intervalo);
+            intervalo = undefined;
+            boton.textContent = 'Iniciar';
+        }
+
+        temporizadorActivo = !temporizadorActivo;
+    }
+
+    // Función para reiniciar el temporizador
+    function restartTimer() {
+        clearInterval(intervalo); // Limpiar el intervalo actual si está activo
+        tiempoRestante = 5 * 60; // Restablecer el tiempo restante a 5 minutos (300 segundos)
+        temporizadorActivo = false; // Establecer el temporizador como inactivo
+        document.getElementById('startButton').textContent = 'Iniciar'; // Restablecer el texto del botón de inicio
+        actualizarTemporizador(); // Actualizar la visualización del temporizador
+    }
+
+    // Al cargar la página, llamamos a la función para iniciar el temporizador
+    window.onload = actualizarTemporizador;
 </script>
