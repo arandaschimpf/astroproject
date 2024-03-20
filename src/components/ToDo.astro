@@ -30,10 +30,10 @@ const { title , index} = Astro.props;
     <polyline points="20 6 9 17 4 12"></polyline>
   </svg>
   <div class="flex items-center justify-center bg-white h-full">
-    <div id=`line${index}` class="flex mix-blend-difference bg-[#2f2f2f] h-0">
+    <div id=`line${index}` class="flex mix-blend-difference bg-[#2f2f2f] h-0 translate-y-[2.5px]">
       <label
         id=`label${index}`
-        class="flex items-center text-[#d8dbdb] mix-blend-difference translate-y-[-3px] text-2xl"
+        class="flex items-center text-[#d8dbdb] mix-blend-difference translate-y-[-2.5px] text-2xl"
         >{title}</label
       >
     </div>
