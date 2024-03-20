@@ -1,0 +1,59 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+
+let index = 0;
+
+import ToDo from '../components/ToDo.astro'
+---
+
+<head>
+  <style></style>
+</head>
+<body>
+<section class="flex flex-col justify-center items-center drop-shadow-2xl">
+  <div class="border-2 flex flex-col justify-center items-center w-[750px]">
+    <div class="bg-white p-4 w-full flex items-center gap-5 border-b">
+      <input
+        type="checkbox"
+        class="appearance-none w-5 h-5 relative peer shrink-0"
+      />
+      <svg
+        class="text-[#d0d0d0] absolute w-5 h-5 text-hint peer-checked:rotate-[-90deg] pointer-events-none transition-all duration-300"
+        xmlns="http://www.w3.org/2000/svg"
+        width="1em"
+        height="1em"
+        viewBox="5.5 5.5 13 13"
+        ><path
+          fill="currentColor"
+          d="m12 13.171l4.95-4.95l1.414 1.415L12 16L5.636 9.636L7.05 8.222z"
+        ></path></svg
+      >
+      <label class="text-[#d0d0d0] text-2xl">{title}</label>
+    </div>
+
+    <div class="w-full flex flex-col items-center justify-between">
+        <ToDo title='Go Shoping' index={index++}/>
+        <ToDo title='Refactor Backend' index={index++}/>
+        <ToDo title='Add new feature to app' index={index++}/>
+        <ToDo title='Todo1' index={index++}/>
+    </div>
+
+    <div class="bg-white  text-[#676363]  p-4 w-full flex items-center justify-between">
+        <span>{3} items left</span>
+      <div class="flex items-center justify-between w-[200px]">
+        <button>All</button>
+        <button>Active</button>
+        <button>Completed</button>
+      </div>
+        <button class="underline">Clear Completed</button>
+    </div>
+  </div>
+  <div class="bg-white w-[700px] h-[8px] shadow-md flex z-30"/>
+  <div class="bg-white w-[650px] h-[8px] shadow-md flex z-20"/>
+</section>
+  <script></script>
+</body>

@@ -1,0 +1,59 @@
+---
+import type { IndexInfo } from 'typescript';
+
+interface Props {
+  title: string,
+  index: number;
+}
+
+const { title , index} = Astro.props;
+
+---
+
+<div class="bg-white p-4 w-full flex items-center gap-3 border-b">
+  <input
+    id=`checkbox${index}`
+    type="checkbox"
+    class="appearance-none w-5 h-5 relative peer shrink-0 border border-[#d0d0d0] rounded-full"
+  />
+  <svg
+    class="text-[#2fafaf] absolute w-5 h-5 p-[.18rem] mt-0.5 text-selected
+            peer-checked:block pointer-events-none peer-checked:transition-all peer-checked:duration-300 hidden"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="square"
+    stroke-linejoin="miter"
+  >
+    <polyline points="20 6 9 17 4 12"></polyline>
+  </svg>
+  <div class="flex items-center justify-center bg-white h-full">
+    <div id=`line${index}` class="flex mix-blend-difference bg-[#2f2f2f] h-0 translate-y-[2.5px]">
+      <label
+        id=`label${index}`
+        class="flex items-center text-[#d8dbdb] mix-blend-difference translate-y-[-2.5px] text-2xl"
+        >{title}</label
+      >
+    </div>
+  </div>
+  <div class="relative flex items-center justify-center bg-white h-full"></div>
+</div>
+
+<script define:vars={{ index }}>
+  const checkbox = document.getElementById(`checkbox${index}`);
+  const label = document.getElementById(`label${index}`);
+  const strikethrough = document.getElementById(`line${index}`);
+
+  checkbox.addEventListener("change", () => {
+    if (checkbox.checked) {
+      console.log();
+      strikethrough.style.height = "1px";
+      label.style.color = "#2f2f2f";
+    } else {
+      strikethrough.style.height = "0";
+      label.style.color = "#d8dbdb";
+    }
+  });
+</script>
