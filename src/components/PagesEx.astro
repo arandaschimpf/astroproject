@@ -1,6 +1,6 @@
-<!-- <section class="card">
+<section class="card">
     <button id="toggle-tasks" class="task-toggle">
-      <span class="task-toggle-text">Tasks▾</span>
+      <span class="task-toggle-text">Show/Hide Tasks</span>
     </button>
     <ul id="task-list" class="task-list hidden">
       <li class="task-item">
@@ -20,36 +20,21 @@
         <label for="task-4" class="task-label">Todo1</label>
       </li>
     </ul>
-  </section> -->
-  <h1>Todos</h1>
-  <section class="card">
-   
-        <button id="toggle-tasks" class="task-toggle">
-            <span class="task-toggle-text">Whats need to be done?</span>
-          </button>
-        <ul id="task-list" class="task-lists">
-        <li class="task-item">
-            <input type="checkbox" id="task-1" class="task-checkbox">
-            <label for="task-1" class="task-label">Go Shopping</label>
-        </li>
-        <li class="task-item">
-            <input type="checkbox" id="task-2" class="task-checkbox">
-            <label for="task-2" class="task-label">Refactor Backend</label>
-        </li>
-        <li class="task-item">
-            <input type="checkbox" id="task-3" class="task-checkbox">
-            <label for="task-3" class="task-label">Add new feature to app</label>
-        </li>
-        <li class="task-item">
-            <input type="checkbox" id="task-4" class="task-checkbox">
-            <label for="task-4" class="task-label">Todo1</label>
-        </li>
-        </ul>
-        <div class = "task-state">
-            <h2 class = "task-remaining">3 items left</h1>
-            <button class = "button-state" >All</button>
-            <button class = "button-state">Active</button>
-            <button class = "button-state">Completed</button>
-            <button class = "clear-button">Clear Completed</button>
-        </div>
   </section>
+
+<script>
+  const buttonShowTasks = document.getElementById('toggle-tasks')
+  const taskList = document.getElementById('task-list')
+
+  buttonShowTasks.addEventListener('click', () => {
+    if (taskList.style.display === 'none') {
+    buttonShowTasks.textContent = 'Ocultar tareas▴'
+    taskList.style.display = 'block';
+  } else {
+    buttonShowTasks.textContent = 'Mostrar/Ocultar tareas▾'
+    taskList.style.display = 'none';
+  }
+  });
+  
+</script>
+
