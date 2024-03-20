@@ -1,9 +1,23 @@
-<h1>Timer</h1>
+---
 
-<style></style>
+
+
+---
+
+
+<img class="img"  src="hot-summer.jpg" />
+<p class="finished"> </p>
+<h1 class="timer">Timer</h1>
+
+<section>
+<button class="start-button" onclick="">START</button>
+</section>
+
+
 
 <script>
   const button = document.querySelector('.start-button')
+  
   const timer = document.querySelector('.timer')
   button?.addEventListener('click', () => {
     let count = 60 * 5
@@ -15,9 +29,67 @@
       if (timer) {
         timer.innerHTML = text
       }
-      if (count <= 0) {
-        clearInterval(interval)
+      if (count === 0) {
+
+      clearInterval(interval)
+
+      const finishedElement = document.querySelector('.timer');
+      const finishedImage = document.querySelector('.img');
+      if (finishedElement != null) { 
+
+           
+           finishedElement.innerHTML = "Finished";
+
       }
-    }, 1000)
+       
+       
+      
+      }
+      
+    }, 
+    
+    1000)
   })
 </script>
+
+
+
+
+
+
+
+
+<style is:global>
+
+.start-button {
+display: flex;
+justify-content: center;
+align-items: center;
+height: 110px;
+width: 110px;
+margin: 0;
+color: antiquewhite;
+background-color: black;
+border-radius: 80px;
+font-family:sans-serif;
+letter-spacing: 5px;
+
+box-shadow: 6px -1px green;
+}
+
+.timer{
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 80px;
+  padding-bottom: 200px
+}
+
+button:hover{
+  background: green
+  
+}
+
+.img{
+  width: 500px;
+}
+
+</style>
