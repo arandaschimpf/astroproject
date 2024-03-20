@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script
+      src="https://kit.fontawesome.com/f8b8909a5f.js"
+      crossorigin="anonymous"></script>
+  </head>
+  <body class="bg-zinc-200 flex flex-col items-center">
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  .title {
+    /* font-family: ; */
+    font-size: 60px;
+    font-weight: bold;
+    color: rgb(231, 128, 11);
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgb(168, 168, 168);
+  }
+  .container {
+    background-color: #ffffff;
+    width: 40vw;
+    box-shadow: 0px 10px 10px grey;
+    display: flex;
+    flex-direction: column;
+    justify-content: first baseline;
+    /* background-color: rgb(168, 168, 168); */
+  }
+  .todo-item {
+    border-top: 0px solid #a29e9e;
+    border-left: 2px solid #a29e9e;
+    border-right: 2px solid #a29e9e;
+    border-bottom: 2px solid #a29e9e;
+    padding: 5px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+</style>

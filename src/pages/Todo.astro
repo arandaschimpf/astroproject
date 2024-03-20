@@ -1,0 +1,79 @@
+<h1 class="title">To Do's</h1>
+<div class="container">
+  <button class="done">
+    <i class="fa-solid fa-chevron-down"></i>
+    <!-- lo del principio es para agregarle un espacio -->
+    <h2>&nbsp;What needs to be done?</h2>
+  </button>
+  <div class="list"></div>
+</div>
+
+<style>
+  .done {
+    border: 2px solid #a29e9e;
+    /* border-top: 2px solid #a29e9e;
+    border-left: 2px solid #a29e9e;
+    border-right: 2px solid #a29e9e; */
+    font-size: 20px;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    background-color: #ffffff;
+    opacity: 1;
+    align-items: center;
+  }
+  .list {
+    opacity: 0;
+  }
+  .fa-solid {
+    rotate: -90deg;
+    transition: 100ms;
+  }
+</style>
+
+<script>
+  const TODO_LIST = document.querySelector(".list");
+  const DONE = document.querySelector(".done");
+  const CONTAINER = document.querySelector(".container");
+  const CARET = document.querySelector(".fa-solid"); //as HTMLElement;
+
+  const MY_LIST_TODO = [
+    "Go Shopping",
+    "Refactor Backend",
+    "Add new feature to App",
+    "Todo 1",
+  ];
+
+  MY_LIST_TODO.forEach((text) => {
+    const TODO_ITEM = document.createElement("h2");
+    TODO_ITEM.textContent = text;
+    TODO_ITEM.type = "checkbox";
+    TODO_ITEM.classList.add("todo-item");
+    console.log(TODO_ITEM);
+    TODO_ITEM.addEventListener("click", () => {
+      if (TODO_ITEM.style.textDecoration === "line-through") {
+        TODO_ITEM.style.textDecoration = null;
+        TODO_ITEM.style.color = "#000000";
+      } else {
+        TODO_ITEM.style.textDecoration = "line-through";
+        TODO_ITEM.style.color = "#a29e9e";
+      }
+    });
+    TODO_LIST.appendChild(TODO_ITEM);
+  });
+  DONE.addEventListener("click", () => {
+    if (TODO_LIST.style.opacity == 1) {
+      TODO_LIST.style.opacity = 0;
+      CARET.style.transform = "rotate(0deg)";
+
+      //   CONTAINER.style.box-shadow = "none";
+    } else {
+      TODO_LIST.style.opacity = 1;
+      //   CARET.style.transform = "rotate 90deg);";
+      CARET.style.transform = "rotate(90deg)";
+
+      //   CONTAINER.style.box-shadow = "0px 10px 10px grey";
+    }
+  });
+</script>
