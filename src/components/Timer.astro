@@ -30,15 +30,17 @@
         timer.innerHTML = text
       }
       if (count === 0) {
-       document.querySelector('.finished')?.innerHTML === "Finished";
 
-       clearInterval(interval)
+      clearInterval(interval)
 
-      
-        const finishedElement = document.querySelector('.timer');
-        if (finishedElement !== null) { // Check if finishedElement is not null
-          finishedElement.innerHTML = "Finished";
-        }
+      const finishedElement = document.querySelector('.timer');
+      const finishedImage = document.querySelector('.img');
+      if (finishedElement != null) { 
+
+           
+           finishedElement.innerHTML = "Finished";
+
+      }
        
        
       
@@ -46,7 +48,7 @@
       
     }, 
     
-    50)
+    1000)
   })
 </script>
 
