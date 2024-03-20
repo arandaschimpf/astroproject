@@ -2,62 +2,78 @@
 
 <style></style>
 
-<script defer>
-    let intervalo;
-    let tiempoRestante = 5 * 60 ; // Tiempo inicial en segundos
-    let temporizadorActivo = false;
+<script >
+const listaTareas = document.querySelector('.tareas');
+const nuevaTareaForm = document.querySelector('#nueva-tarea');
+const tareasPendientes = document.querySelector('.tareas-pendientes');
 
-    // Función para actualizar el temporizador
-    function actualizarTemporizador() {
-        const timerElement = document.getElementById('timer');
-        const minutos = Math.floor(tiempoRestante / 60);
-        const segundos = Math.floor(tiempoRestante % 60);
-        const milisegundos = Math.floor((tiempoRestante % 1) * 1000 );
 
-        timerElement.textContent = formatearTiempo(minutos, segundos, milisegundos.toString().slice(0, 2));
+// Función para agregar una nueva tarea
+function agregarTarea(titulo) {
+  const tarea = document.createElement('div');
+  tarea.classList.add('tarea');
 
-        if (tiempoRestante === 0) {
-            alert('¡El temporizador ha terminado!');
-            clearInterval(intervalo);
-            intervalo = undefined;
-            document.getElementById('startButton').textContent = 'Iniciar';
-            temporizadorActivo = false;
-        } else {
-            tiempoRestante -= 1 / 60;
-        }
-    }
+  const checkbox = document.createElement('input');
+  checkbox.type = 'checkbox';
+  checkbox.classList.add('marcar-tarea');
+  checkbox.addEventListener('change', () => {
+    tarea.classList.toggle('tarea-completada');
+    actualizarTareasPendientes();
+  });
 
-    // Función para formatear el tiempo en formato hh:mm:ss
-    function formatearTiempo(minutos, segundos, milisegundos) {
-milisegundos = milisegundos.toString().padStart(2, '0'); // Asegurar que siempre haya dos dígitos para los milisegundos
-return `${minutos < 10 ? '0' : ''}${minutos}:${segundos < 10 ? '0' : ''}${segundos}:${milisegundos}`;
+  const tituloElement = document.createElement('h3');
+  tituloElement.classList.add('titulo');
+  tituloElement.textContent = titulo;
+
+  const accionesElement = document.createElement('div');
+  accionesElement.classList.add('acciones');
+
+  const eliminarBoton = document.createElement('button');
+  eliminarBoton.classList.add('boton-eliminar');
+  eliminarBoton.textContent = 'Eliminar';
+  eliminarBoton.addEventListener('click', () => {
+    tarea.parentNode.removeChild(tarea);
+    actualizarTareasPendientes();
+  });
+  accionesElement.appendChild(eliminarBoton);
+
+  tarea.appendChild(checkbox);
+  tarea.appendChild(tituloElement);
+  tarea.appendChild(accionesElement);
+
+  listaTareas.appendChild(tarea);
+
+  actualizarTareasPendientes();
 }
 
-    // Función para iniciar o detener el temporizadorr
-    function controlarTemporizador() {
-        const boton = document.getElementById('startButton');
+// Función para actualizar el contador de tareas pendientes
+function actualizarTareasPendientes() {
+  const tareasCompletadas = document.querySelectorAll('.tarea-completada');
+  const totalTareas = listaTareas.querySelectorAll('.tarea').length;
+  const tareasPendientesCount = totalTareas - tareasCompletadas.length;
 
-        if (!temporizadorActivo) {
-            intervalo = setInterval(actualizarTemporizador, 100);
-            boton.textContent = 'Detener';
-        } else {
-            clearInterval(intervalo);
-            intervalo = undefined;
-            boton.textContent = 'Iniciar';
-        }
+  tareasPendientes.textContent = `Tareas pendientes: ${tareasPendientesCount}`;
+}
 
-        temporizadorActivo = !temporizadorActivo;
-    }
+// Agregar un evento al formulario para agregar una nueva tarea
+nuevaTareaForm.addEventListener('submit', (e) => {
+  e.preventDefault();
 
-    // Función para reiniciar el temporizador
-    function restartTimer() {
-        clearInterval(intervalo); // Limpiar el intervalo actual si está activo
-        tiempoRestante = 5 * 60; // Restablecer el tiempo restante a 5 minutos (300 segundos)
-        temporizadorActivo = false; // Establecer el temporizador como inactivo
-        document.getElementById('startButton').textContent = 'Iniciar'; // Restablecer el texto del botón de inicio
-        actualizarTemporizador(); // Actualizar la visualización del temporizador
-    }
+  const titulo = nuevaTareaForm.querySelector('input').value;
 
-    // Al cargar la página, llamamos a la función para iniciar el temporizador
-    window.onload = actualizarTemporizador;
-</script>
+  if (titulo) {
+    agregarTarea(titulo);
+    nuevaTareaForm.querySelector('input').value = '';
+  }
+});
+
+
+
+// Inicializar la aplicación con algunas tareas de ejemplo
+agregarTarea('Comprar leche');
+agregarTarea('Refactorizar el backend');
+agregarTarea('Agregar una nueva función a la aplicación');
+
+actualizarTareasPendientes();
+
+// Mostrar todas las tareas al cargar
