@@ -1,0 +1,28 @@
+---
+import ControlButton from "./ControlButton.astro";
+import TaskItem from "./TaskItem.astro";
+---
+
+<section class="w-half bg-white flex flex-col border border-stone-300 shadow-lg">
+  <form data-selector="task-form" class="flex items-center h-20 text-stone-400">
+    <span class="block w-24 text-center text-2xl scale-x-[3]">v</span>
+    <input type="text" name="task" class="flex-grow h-20 z-10 text-4xl px-4" placeholder="What needs to be done?">
+  </form>
+  <ul>
+    <TaskItem>Go Shopping</TaskItem>
+    <TaskItem>Go Shopping</TaskItem>
+  </ul>
+  <div class="flex justify-between items-center p-2 border-t border-stone-500/25">
+    <div><span data-selector="item-counter">3</span> items left</div>
+    <div>
+      <ControlButton selector="all" active>All</ControlButton>
+      <ControlButton selector="active">Active</ControlButton>
+      <ControlButton selector="completed">Completed</ControlButton>
+    </div>
+    <button class="underline text-stone-400 decoration-stone-400/25">Clear Completed</button>
+  </div>
+</section>
+
+<div class="hidden">
+  <TaskItem></TaskItem>
+</div>

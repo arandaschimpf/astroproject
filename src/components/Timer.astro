@@ -1,23 +1,66 @@
-<h1>Timer</h1>
+<button class="start-button">
+  <div class="timer">05:00</div>
+</button>
 
-<style></style>
+<style>
+  .start-button {
+    --degree: 360deg;
+    --smoothing: 0.5deg;
+    --color: red;
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    background: conic-gradient(
+      var(--color) var(--degree),
+      transparent calc(var(--degree) + var(--smoothing)) 100%
+    );
+    transition: all 0.5s;
+  }
+  .start-button:hover {
+    transform: scale(1.05);
+  }
+
+  .timer {
+    height: 84%;
+    width: 84%;
+    left: 8%;
+    position: relative;
+    border-radius: 50%;
+    background: #d3d3d3;
+    font-size: 3rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
 
 <script>
-  const button = document.querySelector('.start-button')
-  const timer = document.querySelector('.timer')
-  button?.addEventListener('click', () => {
-    let count = 60 * 5
-    const interval = setInterval(() => {
-      count--
-      const minutes = Math.floor(count / 60).toString().padStart(2, '0')
-      const seconds = (count % 60).toString().padStart(2, '0')
-      const text = `${minutes}:${seconds}`
+  const button = document.querySelector(".start-button");
+  const timer = document.querySelector(".timer");
+  let interval: NodeJS.Timeout;
+  button?.addEventListener("click", () => {
+    let count = 60 * 5;
+    clearInterval(interval);
+    const render = () => {
+      const minutes = Math.floor(count / 60)
+        .toString()
+        .padStart(2, "0");
+      const seconds = (count % 60).toString().padStart(2, "0");
+      const text = `${minutes}:${seconds}`;
       if (timer) {
-        timer.innerHTML = text
+        timer.innerHTML = text;
       }
+      // @ts-ignore
+      button?.style.setProperty("--degree", `${(count / (60 * 5)) * 360}deg`);
       if (count <= 0) {
-        clearInterval(interval)
+        clearInterval(interval);
       }
-    }, 1000)
-  })
+    }
+    render()
+    interval = setInterval(() => {
+      count--
+      render()
+    }, 1000);
+  });
 </script>
