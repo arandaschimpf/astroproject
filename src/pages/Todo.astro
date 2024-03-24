@@ -1,21 +1,33 @@
-<h1 class="title">To Do's</h1>
-<div class="container">
-  <button class="done">
-    <i class="fa-solid fa-chevron-down"></i>
-    <!-- lo del principio es para agregarle un espacio -->
-    <h2>&nbsp;What needs to be done?</h2>
-  </button>
-  <div class="list"></div>
+<div class="big-div">
+  <h1 class="title">To Do's</h1>
+  <div class="container">
+    <button class="done">
+      <i class="fa-solid fa-chevron-down" id="caret"></i>
+      <!-- lo del principio es para agregarle un espacio -->
+      <h2>&nbsp;What needs to be done?</h2>
+    </button>
+    <div class="list"></div>
+    <div class="options">
+      <button class="items-remaining" style="text-align: left;"></button>
+      <div class="middle-options">
+        <button id="all">all</button>
+        <button> active</button>
+        <button id="completed">completed</button>
+      </div>
+      <button id="clear">clear completed</button>
+    </div>
+  </div>
 </div>
 
 <style>
+  .big-div {
+    top: 20%;
+    position: absolute;
+  }
   .done {
     border: 2px solid #a29e9e;
-    /* border-top: 2px solid #a29e9e;
-    border-left: 2px solid #a29e9e;
-    border-right: 2px solid #a29e9e; */
-    font-size: 20px;
-    padding: 5px;
+    font-size: 22px;
+    padding: 6px;
     display: flex;
     flex-direction: row;
     cursor: pointer;
@@ -24,20 +36,48 @@
     align-items: center;
   }
   .list {
-    opacity: 0;
+    /* opacity: 0; */
+    display: none;
+    position: relative;
+    transition: 1s;
   }
-  .fa-solid {
-    rotate: -90deg;
-    transition: 100ms;
+  .options {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px;
+    border-top: 0px solid #a29e9e;
+    border-left: 2px solid #a29e9e;
+    border-right: 2px solid #a29e9e;
+    border-bottom: 2px solid #a29e9e;
+    font-size: 10px;
+  }
+  .middle-options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+    border: 1px solid #000000;
+    width: 33%;
+    padding: 3px;
+    margin-left: 30px;
+  }
+  #clear {
+    text-decoration: underline;
   }
 </style>
 
 <script>
+  //css classes definitions
   const TODO_LIST = document.querySelector(".list");
   const DONE = document.querySelector(".done");
   const CONTAINER = document.querySelector(".container");
-  const CARET = document.querySelector(".fa-solid"); //as HTMLElement;
+  const CARET = document.querySelector(".fa-solid");
+  const CHECKBOX = document.querySelector(".check-box");
+  const ITEMS_REMAINING = document.querySelector(".items-remaining");
 
+  // default list of thing todo definition
   const MY_LIST_TODO = [
     "Go Shopping",
     "Refactor Backend",
@@ -45,35 +85,95 @@
     "Todo 1",
   ];
 
+  // variable for knowing how much items arent checked
+  let itemsRemaining = MY_LIST_TODO.length;
+  ITEMS_REMAINING.textContent = itemsRemaining + " items remaining";
+
   MY_LIST_TODO.forEach((text) => {
+    //html elements declarations
+    const TODO_DIV = document.createElement("div");
+    const TODO_CHECKBOX = document.createElement("div");
     const TODO_ITEM = document.createElement("h2");
+    const TODO_CHECK = document.createElement("i");
+
+    //todo text
     TODO_ITEM.textContent = text;
-    TODO_ITEM.type = "checkbox";
-    TODO_ITEM.classList.add("todo-item");
-    console.log(TODO_ITEM);
-    TODO_ITEM.addEventListener("click", () => {
+    //check of the checkbox
+    TODO_CHECK.classList.add("fa-solid", "fa-check");
+    TODO_CHECKBOX.appendChild(TODO_CHECK);
+
+    //circle of the checkbox
+    TODO_CHECKBOX.classList.add("check-box");
+
+    //div of the todos
+    TODO_DIV.appendChild(TODO_CHECKBOX);
+    TODO_DIV.appendChild(TODO_ITEM);
+    TODO_DIV.classList.add("todo-item");
+
+    //linetrough click
+    TODO_DIV.addEventListener("click", () => {
       if (TODO_ITEM.style.textDecoration === "line-through") {
         TODO_ITEM.style.textDecoration = null;
         TODO_ITEM.style.color = "#000000";
+        TODO_CHECKBOX.checked = false;
+        TODO_CHECK.style.opacity = 0;
+        itemsRemaining = itemsRemaining + 1;
+        // console.log(itemsRemaining);
+        ITEMS_REMAINING.textContent = itemsRemaining + " items remaining";
       } else {
         TODO_ITEM.style.textDecoration = "line-through";
         TODO_ITEM.style.color = "#a29e9e";
+        TODO_CHECKBOX.checked = true;
+        TODO_CHECK.style.opacity = 1;
+        itemsRemaining = itemsRemaining - 1;
+        // console.log(itemsRemaining);
+        ITEMS_REMAINING.textContent = itemsRemaining + " items remaining";
       }
     });
-    TODO_LIST.appendChild(TODO_ITEM);
+    TODO_LIST.appendChild(TODO_DIV);
   });
-  DONE.addEventListener("click", () => {
-    if (TODO_LIST.style.opacity == 1) {
-      TODO_LIST.style.opacity = 0;
-      CARET.style.transform = "rotate(0deg)";
 
+  // To Do's click
+  DONE.addEventListener("click", () => {
+    if (TODO_LIST.style.display === "block") {
+      TODO_LIST.style.display = "none";
+      CARET.style.transform = "rotate(0deg)";
+      DONE.style.color = "#000000";
       //   CONTAINER.style.box-shadow = "none";
     } else {
-      TODO_LIST.style.opacity = 1;
-      //   CARET.style.transform = "rotate 90deg);";
+      TODO_LIST.style.display = "block";
       CARET.style.transform = "rotate(90deg)";
-
+      DONE.style.color = "#a29e9e";
       //   CONTAINER.style.box-shadow = "0px 10px 10px grey";
     }
   });
+
+  //see all onclick function
+  const SEE_ALL = document.getElementById("all");
+  SEE_ALL.onclick = () => {
+    const TODO_LIST_CONTENT = Array.from(TODO_LIST.children); //this has to stay here because some elements may have been added to the list
+    TODO_LIST_CONTENT.map((item) => {
+      item.style.display = "flex";
+      console.log(item);
+    });
+  };
+
+  //clear compleated onclick function
+  const CLEAR_COMPLETED = document.getElementById("clear");
+  CLEAR_COMPLETED.onclick = () => {
+    const TODO_LIST_CONTENT = Array.from(TODO_LIST.children);
+    TODO_LIST_CONTENT.forEach((item) => {
+      const CLASS = item.querySelector(".todo-item");
+      // const computedStyle = getComputedStyle(item);
+      if (item.style.textDecoration === "line-through") {
+        computedStyle.display = "none";
+        console.log("asdasda");
+      }
+      // console.log(computedStyle);
+      // item.classList.remove(".list");
+      console.log(item);
+      console.log(CLASS);
+      console.log(item.todo-item);
+    });
+  };
 </script>
