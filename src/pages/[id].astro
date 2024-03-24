@@ -1,5 +1,10 @@
 ---
 import Style from "../layouts/Style.astro"
+import TAREA18 from "../components/TAREA18.astro"
+import Timer from "../components/Timer.astro"
+
 const id = Astro.params.id ?? '1'
-layout: Style
 ---
+<Style title="Pagina">
+    <TAREA18 id={id}/>
+  </Style>
