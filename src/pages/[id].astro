@@ -1,9 +1,10 @@
 ---
-import Layout from "../layouts/Layout.astro"
-import ImageCard from '../components/ImageCard.astro'
+import Style from "../layouts/Style.astro"
+import TAREA18 from "../components/TAREA18.astro"
+import Timer from "../components/Timer.astro"
+
 const id = Astro.params.id ?? '1'
 ---
-
-<Layout title="Pagina">
-  <ImageCard id={id}/>
-</Layout>
+<Style title="Pagina">
+    <TAREA18 id={id}/>
+  </Style>

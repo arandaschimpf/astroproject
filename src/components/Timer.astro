@@ -1,23 +1,92 @@
-<h1>Timer</h1>
+---
 
-<style></style>
+---
 
-<script>
-  const button = document.querySelector('.start-button')
-  const timer = document.querySelector('.timer')
-  button?.addEventListener('click', () => {
-    let count = 60 * 5
-    const interval = setInterval(() => {
-      count--
-      const minutes = Math.floor(count / 60).toString().padStart(2, '0')
-      const seconds = (count % 60).toString().padStart(2, '0')
-      const text = `${minutes}:${seconds}`
-      if (timer) {
-        timer.innerHTML = text
-      }
-      if (count <= 0) {
-        clearInterval(interval)
-      }
-    }, 1000)
-  })
-</script>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        text-align: center;
+    }
+
+    .box {
+        border: 2px solid #ccc;
+        border-radius: 0;
+        padding: 20px;
+        max-width: 400px;
+        margin: auto;
+    }
+
+    .title {
+        margin-bottom: 20px;
+    }
+
+    .todo-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .todo-item {
+        margin-bottom: 10px;
+        border: 2px solid #ccc;
+        border-radius: 0;
+    }
+
+    .checkbox-container {
+        display: inline-block;
+        position: relative;
+        padding-left: 35px;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .checkbox-container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+    }
+
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+        border: 1px solid #ccc;
+    }
+
+    .checkbox-container input:checked ~ .checkmark {
+        background-color: #2196f3;
+    }
+
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    .checkbox-container input:checked ~ .checkmark:after {
+        display: block;
+    }
+
+    .checkbox-container .checkmark:after {
+        left: 9px;
+        top: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        transform: rotate(45deg);
+    }
+</style>
