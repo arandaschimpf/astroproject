@@ -6,7 +6,7 @@
       <!-- lo del principio es para agregarle un espacio -->
       <h2>&nbsp;What needs to be done?</h2>
     </button>
-    <div class="list"></div>
+    <div id="list"></div>
     <div class="options">
       <button class="items-remaining" style="text-align: left;"></button>
       <div class="middle-options">
@@ -35,7 +35,7 @@
     opacity: 1;
     align-items: center;
   }
-  .list {
+  #list {
     /* opacity: 0; */
     display: none;
     position: relative;
@@ -70,7 +70,7 @@
 
 <script>
   //css classes definitions
-  const TODO_LIST = document.querySelector(".list");
+  const TODO_LIST = document.getElementById("list");
   const DONE = document.querySelector(".done");
   const CONTAINER = document.querySelector(".container");
   const CARET = document.querySelector(".fa-solid");
@@ -162,18 +162,34 @@
   const CLEAR_COMPLETED = document.getElementById("clear");
   CLEAR_COMPLETED.onclick = () => {
     const TODO_LIST_CONTENT = Array.from(TODO_LIST.children);
-    TODO_LIST_CONTENT.forEach((item) => {
-      const CLASS = item.querySelector(".todo-item");
-      // const computedStyle = getComputedStyle(item);
-      if (item.style.textDecoration === "line-through") {
-        computedStyle.display = "none";
-        console.log("asdasda");
-      }
+    // TODO_LIST_CONTENT.forEach((item) => {
+    //   const CLASS = item.querySelector(".todo-item");
+    //   // const computedStyle = getComputedStyle(item);
+    //   if (item.style.textDecoration === "line-through") {
+    //     // computedStyle.display = "none";
+
+    //     console.log("asdasda");
+    //   }
       // console.log(computedStyle);
       // item.classList.remove(".list");
-      console.log(item);
-      console.log(CLASS);
-      console.log(item.todo-item);
-    });
+      // console.log(item);
+      // item.dislpay = "none";
+      // console.log(CLASS);
+      // console.log(item.todo-item);
+      for(let x = 0; x < TODO_LIST_CONTENT.length; x++)
+      {
+
+        // let aux = TODO_LIST.children[x];
+        let aux = getComputedStyle(TODO_LIST.children[x].children[1]).textDecoration;
+        // console.log(getComputedStyle(TODO_LIST.children[x]))
+        if(aux.includes("line-through")){
+          console.log("hi there");
+          TODO_LIST.children[x].setAttribute("style", "display: none; ")
+        }
+        // console.log(aux.textDecoration);
+        // console.log(getComputedStyle(TODO_LIST.children[x].children[1]).textDecoration);
+        // console.log(TODO_LIST.children[x]);
+        // TODO_LIST.children[x].setAttribute("style", "display: none; ")
+      } 
   };
 </script>
