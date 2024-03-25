@@ -47,9 +47,9 @@
   const addTaskButton = document.getElementById('add-task');
   const newTaskInput = document.getElementById('new-task');
 
-  // Función para agregar una nueva tarea
+  
   addTaskButton?.addEventListener('click', () => {
-      const taskName = newTaskInput.value.trim();
+      const taskName = newTaskInput.value.trim(); //Elimina los espacios en blanco
       if (taskName) {
           const newTaskItem = document.createElement('li');
           newTaskItem.className = 'task-item';
@@ -58,19 +58,19 @@
               <label class="task-label">${taskName}</label>
           `;
           taskList.appendChild(newTaskItem);
-          newTaskInput.value = ''; // Limpiar el input después de agregar la tarea
+          newTaskInput.value = ''; // Para vaciar el input despues de que se cree la tarea nueva. 
           updateRemainingTasksCount();
       }
   });
 
-  // Función para mostrar todas las tareas
+  
   showAllButton?.addEventListener('click', () => {
       document.querySelectorAll('.task-item').forEach(task => {
           task.style.display = 'block';
       });
   });
 
-  // Función para mostrar solo las tareas activas (no completadas)
+  
   showActiveButton?.addEventListener('click', () => {
       document.querySelectorAll('.task-item').forEach(task => {
           if (!task.querySelector('.task-checkbox').checked) {
@@ -81,7 +81,6 @@
       });
   });
 
-  // Función para mostrar solo las tareas completadas
   showCompletedButton?.addEventListener('click', () => {
       document.querySelectorAll('.task-item').forEach(task => {
           if (task.querySelector('.task-checkbox').checked) {
@@ -92,7 +91,7 @@
       });
   });
 
-  // Función para eliminar todas las tareas completadas
+
   clearCompletedButton?.addEventListener('click', () => {
       document.querySelectorAll('.task-item').forEach(task => {
           if (task.querySelector('.task-checkbox').checked) {
@@ -102,13 +101,13 @@
       updateRemainingTasksCount();
   });
 
-  // Función para actualizar el recuento de tareas restantes
+  
   function updateRemainingTasksCount() {
       const remainingTasks = document.querySelectorAll('.task-item:not(.completed)').length;
       remainingTasksCount.textContent = remainingTasks;
   }
 
-  // Manejador de eventos para marcar una tarea como completada
+ //Es una funcion para cuando se clickea en la tarea, salga como completada y el contador de Remaining Tasks se actualice
   taskList?.addEventListener('change', event => {
       const checkbox = event.target;
       const taskItem = checkbox.closest('.task-item');
@@ -123,7 +122,7 @@
   // Inicialización para establecer el recuento de tareas restantes al cargar la página
   updateRemainingTasksCount();
 
-  // Mostrar u ocultar la lista de tareas al hacer clic en el botón
+  
   buttonShowTasks?.addEventListener('click', () => {
       if (taskList.style.display === 'none') {
           buttonShowTasks.textContent = 'What needs to be done?';
