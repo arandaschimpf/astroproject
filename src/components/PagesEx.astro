@@ -1,52 +1,139 @@
 <section class="card">
-    <button id="toggle-tasks" class="task-toggle">What needs to be done?</button>
-    <ul id="task-list" class="task-list">
-      <li class="task-item">
-        <input type="checkbox" id="task-1" class="task-checkbox">
-        <label for="task-1" class="task-label">Go Shopping</label>
-      </li>
-      <li class="task-item">
-        <input type="checkbox" id="task-2" class="task-checkbox">
-        <label for="task-2" class="task-label">Refactor Backend</label>
-      </li>
-      <li class="task-item">
-        <input type="checkbox" id="task-3" class="task-checkbox">
-        <label for="task-3" class="task-label">Add new feature to app</label>
-      </li>
-      <li class="task-item">
-        <input type="checkbox" id="task-4" class="task-checkbox">
-        <label for="task-4" class="task-label">Todo1</label>
-      </li>
-    </ul>
+  <button id="toggle-tasks" class="task-toggle">What needs to be done?</button>
+  <ul id="task-list" class="task-list">
+    <li class="task-item">
+      <input type="checkbox" id="task-1" class="task-checkbox">
+      <label for="task-1" class="task-label">Go Shopping</label>
+    </li>
+    <li class="task-item">
+      <input type="checkbox" id="task-2" class="task-checkbox">
+      <label for="task-2" class="task-label">Refactor Backend</label>
+    </li>
+    <li class="task-item">
+      <input type="checkbox" id="task-3" class="task-checkbox">
+      <label for="task-3" class="task-label">Add new feature to app</label>
+    </li>
+    <li class="task-item">
+      <input type="checkbox" id="task-4" class="task-checkbox">
+      <label for="task-4" class="task-label">Todo1</label>
+    </li>
+  </ul>
 
-    <div class = "task-state">
-    <ul id = "remaining-tasks">
-      <li>Remaining tasks: <span id = "remaining-tasks-count">4</span></li>
-    </ul>
-    <div class = "task-buttons">
-      <button id = "show-all">All</button>
-      <button id = "show-active">Active</button>
-      <button id = "show-completed">Completed</button>
-    </div>
-    <button id = "clear-completed">Clear Completed</button>
-  </div> 
+  <input type="text" id="new-task" placeholder="Enter new task">
+  <button id="add-task">Add Task</button>
 
-  </section>
+  <div class="task-state">
+      <ul id="remaining-tasks">
+          <li>Remaining tasks: <span id="remaining-tasks-count">4</span></li>
+      </ul>
+      <div class="task-buttons">
+          <button id="show-all">All</button>
+          <button id="show-active">Active</button>
+          <button id="show-completed">Completed</button>
+      </div>
+      <button id="clear-completed">Clear Completed</button>
+  </div>
+
+</section>
 
 <script>
-  const buttonShowTasks = document.getElementById('toggle-tasks')
-  const taskList = document.getElementById('task-list')
+  const buttonShowTasks = document.getElementById('toggle-tasks');
+  const taskList = document.getElementById('task-list');
+  const remainingTasksCount = document.getElementById('remaining-tasks-count');
+  const showAllButton = document.getElementById('show-all');
+  const showActiveButton = document.getElementById('show-active');
+  const showCompletedButton = document.getElementById('show-completed');
+  const clearCompletedButton = document.getElementById('clear-completed');
+  const addTaskButton = document.getElementById('add-task');
+  const newTaskInput = document.getElementById('new-task');
 
-  buttonShowTasks.addEventListener('click', () => {
-    if (taskList.style.display === 'none') {
-    buttonShowTasks.textContent = 'What needs to be done?'
-    taskList.style.display = 'block';
-  } else {
-    buttonShowTasks.textContent = 'Show'
-    taskList.style.display = 'none';
-  }
+  // Función para agregar una nueva tarea
+  addTaskButton?.addEventListener('click', () => {
+      const taskName = newTaskInput.value.trim();
+      if (taskName) {
+          const newTaskItem = document.createElement('li');
+          newTaskItem.className = 'task-item';
+          newTaskItem.innerHTML = `
+              <input type="checkbox" class="task-checkbox">
+              <label class="task-label">${taskName}</label>
+          `;
+          taskList.appendChild(newTaskItem);
+          newTaskInput.value = ''; // Limpiar el input después de agregar la tarea
+          updateRemainingTasksCount();
+      }
   });
-  
-//   <svg viewBox="-122.9 121.1 105.9 61.9" width="15" height = "15"><path d="m-63.2 180.3 43.5-43.5c1.7-1.7 2.7-4 2.7-6.5s-1-4.8-2.7-6.5c-1.7-1.7-4-2.7-6.5-2.7s-4.8 1-6.5 2.7L-69.9 161l-37.2-37.2c-1.7-1.7-4-2.7-6.5-2.7s-4.8 1-6.5 2.6c-1.9 1.8-2.8 4.2-2.8 6.6 0 2.3.9 4.6 2.6 6.5 11.4 11.5 41 41.2 43 43.3l.2.2c3.6 3.6 10.3 3.6 13.9 0z"></path></svg>
-// </script>
 
+  // Función para mostrar todas las tareas
+  showAllButton?.addEventListener('click', () => {
+      document.querySelectorAll('.task-item').forEach(task => {
+          task.style.display = 'block';
+      });
+  });
+
+  // Función para mostrar solo las tareas activas (no completadas)
+  showActiveButton?.addEventListener('click', () => {
+      document.querySelectorAll('.task-item').forEach(task => {
+          if (!task.querySelector('.task-checkbox').checked) {
+              task.style.display = 'block';
+          } else {
+              task.style.display = 'none';
+          }
+      });
+  });
+
+  // Función para mostrar solo las tareas completadas
+  showCompletedButton?.addEventListener('click', () => {
+      document.querySelectorAll('.task-item').forEach(task => {
+          if (task.querySelector('.task-checkbox').checked) {
+              task.style.display = 'block';
+          } else {
+              task.style.display = 'none';
+          }
+      });
+  });
+
+  // Función para eliminar todas las tareas completadas
+  clearCompletedButton?.addEventListener('click', () => {
+      document.querySelectorAll('.task-item').forEach(task => {
+          if (task.querySelector('.task-checkbox').checked) {
+              task.remove();
+          }
+      });
+      updateRemainingTasksCount();
+  });
+
+  // Función para actualizar el recuento de tareas restantes
+  function updateRemainingTasksCount() {
+      const remainingTasks = document.querySelectorAll('.task-item:not(.completed)').length;
+      remainingTasksCount.textContent = remainingTasks;
+  }
+
+  // Manejador de eventos para marcar una tarea como completada
+  taskList?.addEventListener('change', event => {
+      const checkbox = event.target;
+      const taskItem = checkbox.closest('.task-item');
+      if (checkbox.checked) {
+          taskItem.classList.add('completed');
+      } else {
+          taskItem.classList.remove('completed');
+      }
+      updateRemainingTasksCount();
+  });
+
+  // Inicialización para establecer el recuento de tareas restantes al cargar la página
+  updateRemainingTasksCount();
+
+  // Mostrar u ocultar la lista de tareas al hacer clic en el botón
+  buttonShowTasks?.addEventListener('click', () => {
+      if (taskList.style.display === 'none') {
+          buttonShowTasks.textContent = 'What needs to be done?';
+          taskList.style.display = 'block';
+      } else {
+          buttonShowTasks.textContent = 'Show';
+          taskList.style.display = 'none';
+      }
+  });
+</script>
+
+<!-- <svg viewBox="-122.9 121.1 105.9 61.9" width="15" height = "15"><path d="m-63.2 180.3 43.5-43.5c1.7-1.7 2.7-4 2.7-6.5s-1-4.8-2.7-6.5c-1.7-1.7-4-2.7-6.5-2.7s-4.8 1-6.5 2.7L-69.9 161l-37.2-37.2c-1.7-1.7-4-2.7-6.5-2.7s-4.8 1-6.5 2.6c-1.9 1.8-2.8 4.2-2.8 6.6 0 2.3.9 4.6 2.6 6.5 11.4 11.5 41 41.2 43 43.3l.2.2c3.6 3.6 10.3 3.6 13.9 0z"></path></svg>
+  -->
