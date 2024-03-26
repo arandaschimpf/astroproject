@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script
+      src="https://kit.fontawesome.com/f8b8909a5f.js"
+      crossorigin="anonymous"></script>
+  </head>
+  <body class="bg-zinc-200 flex flex-col items-center">
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  .title {
+    /* font-family: ; */
+    font-size: 60px;
+    font-weight: bold;
+    color: rgb(231, 128, 11);
+    text-align: center;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    height: 100vh;
+    background-color: rgb(168, 168, 168);
+  }
+  .container {
+    width: 35vw;
+    box-shadow: 0px 10px 10px grey;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: first baseline;
+    /* background-color: rgb(168, 168, 168); */
+  }
+  .todo-item {
+    border-top: 0px solid #a29e9e;
+    border-left: 2px solid #a29e9e;
+    border-right: 2px solid #a29e9e;
+    border-bottom: 2px solid #a29e9e;
+    padding: 5px;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #ffffff;
+  }
+  .check-box {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    border-radius: 50%;
+    border: 1px solid #000000;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+  }
+  .fa-check {
+    align-items: center;
+    font-size: 13px;
+    color: green;
+    margin-top: 3px;
+    opacity: 0;
+  }
+  #caret {
+    rotate: -90deg;
+    transition: 100ms;
+  }
+</style>
