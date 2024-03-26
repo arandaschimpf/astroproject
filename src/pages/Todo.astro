@@ -4,7 +4,8 @@
     <button class="done">
       <i class="fa-solid fa-chevron-down" id="caret"></i>
       <!-- lo del principio es para agregarle un espacio -->
-      <h2>&nbsp;What needs to be done?</h2>
+      <!-- <h2>&nbsp;What needs to be done?</h2> -->
+      <input type="text" id="todo-content" placeholder="  What needs to be done?">
     </button>
     <div id="list"></div>
     <div class="options">
@@ -78,6 +79,12 @@
     padding: 3px;
     border-radius: 8%;
   }
+
+  #todo-content {
+    outline: none;
+    margin-left: 2px;
+
+  }
 </style>
 
 <script>
@@ -145,7 +152,7 @@
   });
 
   // To Do's click
-  DONE.addEventListener("click", () => {
+  CARET.addEventListener("click", () => {
     if (TODO_LIST.style.display === "block") {
       TODO_LIST.style.display = "none";
       CARET.style.transform = "rotate(0deg)";
@@ -266,6 +273,20 @@
       }
     }
   }
+
+  const INPUTBOX = document.getElementById('todo-content');
+
+                // INPUTBOX.addEventListener('keydown', (event) => {
+                //     if (event.key === 'Enter') {
+                //         const NEWITEM = INPUTBOX.value.trim();
+
+                //         TITLE_LIST.push(NEWITEM); 
+                //         printList(); 
+                //         INPUTBOX.value = ''; 
+                        
+                //     }
+                // });
+
   seeAllOnClick(); //this makes the all square start apearing
 
   //this is the click that makes the list more dinamic when you press something
