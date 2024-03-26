@@ -36,7 +36,6 @@
     align-items: center;
   }
   #list {
-    /* opacity: 0; */
     display: none;
     position: relative;
     transition: 1s;
@@ -131,6 +130,7 @@
         TODO_CHECK.style.opacity = 0;
         itemsRemaining = itemsRemaining + 1;
         ITEMS_REMAINING.textContent = itemsRemaining + " items remaining";
+        // dinamicClick();
       } else {
         TODO_ITEM.style.textDecoration = "line-through";
         TODO_ITEM.style.color = "#a29e9e";
@@ -138,6 +138,7 @@
         TODO_CHECK.style.opacity = 1;
         itemsRemaining = itemsRemaining - 1;
         ITEMS_REMAINING.textContent = itemsRemaining + " items remaining";
+        // dinamicClick();
       }
     });
     TODO_LIST.appendChild(TODO_DIV);
@@ -156,9 +157,14 @@
     }
   });
 
-  //see all onclick function
+  //declaration of the id's of the bottom options
+  const COMPLETED = document.getElementById("completed");
   const SEE_ALL = document.getElementById("all");
-  SEE_ALL.onclick = () => {
+  const CLEAR_COMPLETED = document.getElementById("clear");
+  const ACTIVE = document.getElementById("active");
+
+  //see all onclick function
+  const seeAllOnClick = () => {
     const TODO_LIST_CONTENT = Array.from(TODO_LIST.children); //this has to stay here because some elements may have been added to the list
     for (let x = 0; x < TODO_LIST_CONTENT.length; x++) {
       TODO_LIST.children[x].setAttribute("style", "display: ; ");
@@ -166,11 +172,10 @@
     unCheckBoxes();
     SEE_ALL.setAttribute("style", "border: 1px solid #a29e9e;");
   };
+  SEE_ALL.onclick = seeAllOnClick;
 
   //clear compleated onclick function
-  const CLEAR_COMPLETED = document.getElementById("clear");
-  CLEAR_COMPLETED.onclick = clearCompleated();
-  function clearCompleated() {
+  const clearCompletedOnClick = () => {
     const TODO_LIST_CONTENT = Array.from(TODO_LIST.children); //esto tiene que estar en la funcion para que se actualice cada vez que se añada un objeto al TODO_LIST
     for (let x = 0; x < TODO_LIST_CONTENT.length; x++) {
       let aux = getComputedStyle(
@@ -186,11 +191,12 @@
     }
     unCheckBoxes();
     OPTIONS.setAttribute("style", "padding: 3.5px; ");
-  }
+  };
+  CLEAR_COMPLETED.onclick = clearCompletedOnClick;
 
   //Compleated elements button onclick function
-  const COMPLETED = document.getElementById("completed");
-  COMPLETED.onclick = () => {
+
+  const completedOnClick = () => {
     const TODO_LIST_CONTENT = Array.from(TODO_LIST.children); //esto tiene que estar en la funcion para que se actualice cada vez que se añada un objeto al TODO_LIST
     for (let x = 0; x < TODO_LIST_CONTENT.length; x++) {
       let aux = getComputedStyle(
@@ -205,10 +211,11 @@
     unCheckBoxes();
     COMPLETED.setAttribute("style", "border: 1px solid #a29e9e;");
   };
+  COMPLETED.onclick = completedOnClick;
 
   //ACTIVE elements button onclick function
-  const ACTIVE = document.getElementById("active");
-  ACTIVE.onclick = () => {
+
+  const activeOnClick = () => {
     const TODO_LIST_CONTENT = Array.from(TODO_LIST.children); //esto tiene que estar en la funcion para que se actualice cada vez que se añada un objeto al TODO_LIST
     for (let x = 0; x < TODO_LIST_CONTENT.length; x++) {
       let aux = getComputedStyle(
@@ -223,11 +230,46 @@
     unCheckBoxes();
     ACTIVE.setAttribute("style", "border: 1px solid #a29e9e;");
   };
+  ACTIVE.onclick = activeOnClick;
 
+  //function that selects the bottom option you press
   function unCheckBoxes() {
+    // border: 1px solid #000000;
     ACTIVE.setAttribute("style", "border: 0px;");
     COMPLETED.setAttribute("style", "border: 0px;");
     SEE_ALL.setAttribute("style", "border: 0px;");
     OPTIONS.setAttribute("style", "padding: 3px; ");
+    // dinamicClick();
   }
+
+  //this funtion makes the clicks dinamic when we have
+  function dinamicClick() {
+    if (
+      getComputedStyle(SEE_ALL).border === "0.666667px solid rgb(162, 158, 158)"
+    ) {
+      // seeAllOnClick();
+      console.log("See All");
+    } else {
+      if (
+        getComputedStyle(ACTIVE).border ===
+        "0.666667px solid rgb(162, 158, 158)"
+      ) {
+        activeOnClick();
+        console.log("Active");
+      }
+      if (
+        getComputedStyle(COMPLETED).border ===
+        "0.666667px solid rgb(162, 158, 158)"
+      ) {
+        completedOnClick();
+        console.log("compleated");
+      }
+    }
+  }
+  seeAllOnClick(); //this makes the all square start apearing
+
+  //this is the click that makes the list more dinamic when you press something
+  TODO_LIST.addEventListener("click", () => {
+    dinamicClick();
+  });
 </script>
