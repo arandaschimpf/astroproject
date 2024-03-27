@@ -7,13 +7,6 @@ type Pokemon = {
 };
 
 const PokemonArray = await getPokemonsApi();
-// console.log(PokemonArray);
-{
-  //   PokemonArray.results.map((data: Pokemon) => {
-  //     // return <PokemonCard url={data.url} />;
-  //     console.log(data);
-  //   });
-}
 
 const pokemonDetails: Pokemon[] = PokemonArray.results;
 // console.log(pokemonDetails);
@@ -28,35 +21,39 @@ const pokemonDetails: Pokemon[] = PokemonArray.results;
   </head>
   <body>
     <img src="../../PokemonTitle.png" class="title" />
-    {
-      pokemonDetails.map((data: Pokemon) => {
-        // return <PokemonCard url={data.url} />;
-        // console.log(data.url);
-        return <PokemonCard url={data.url} />;
-      })
-    }
-    <!-- <PokemonCard url={PokemonArray.results[0].url} />; -->
+    <div class="columns">
+      {
+        pokemonDetails.map((data: Pokemon) => {
+          return <PokemonCard url={data.url} />;
+        })
+      }
+      <!-- <PokemonCard url={PokemonArray.results[0].url} />; -->
+    </div>
   </body>
 </html>
 
 <style>
   body {
-    /* width: 100vw; */
     display: flex;
-    /* align-content: center; */
     justify-content: center;
+    align-items: center;
     flex-direction: column;
   }
 
   .title {
     width: 80%;
-    /* position: absolute; */
+  }
+
+  .columns {
+    display: flex;
+    flex-wrap: wrap; /* Para que los elementos se envuelvan a la siguiente línea */
+    justify-content: space-between;
+    margin-left: 100px;
+    margin-right: 100px;
+  }
+
+  /* Estilo para cada columna (cada PokemonCard) */
+  .columns > * {
+    flex-basis: calc(33.33% - 10px); /* Ancho de cada columna */
   }
 </style>
-
-<script>
-  // import { getPokemonsApi } from "./api/pokemons/pokemonIndex";
-  // const tqnto = await getPokemonsApi()
-  // console.log(tqnto)
-  //
-</script>
