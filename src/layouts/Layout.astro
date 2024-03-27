@@ -1,144 +1,129 @@
 ---
 interface Props {
-	title: string;
+    title: string;
 }
 
 const { title } = Astro.props;
-import  '../components/Timer.astro'
+import '../components/Timer.astro'
 ---
 <html>
-  <head>
+<head>
     <title>Lista de tareas</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <header>
-      <h1 class="">LISTA DE TAREAS</h1>
-      <span class="tareas-pendientes">Tareas pendientes: 0</span>
-      <div class="filtros">
-        <button type="button" style="color:rgb(255, 255, 255)" class="filtro"  id="todas">Todas</button>
+    <link rel="stylesheet" >
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+    <h1 class="">LISTA DE TAREAS</h1>
+    <span class="tareas-pendientes">Tareas pendientes: 0</span>
+    <div class="filtros">
+        <button type="button" style="color:rgb(255, 255, 255)" class="filtro" id="todas">Todas</button>
         <button type="button" style="color:red" class="filtro" id="incompletas">Incompletas</button>
         <button type="button" style="color: rgb(0, 255, 0);" class="filtro" id="completas">Completadas</button>
-      </div>
-    </header>
-    <main>
-      <section class="tareas">
-        </section>
-        <form id="nueva-tarea">
-            <div class="contenedor-formulario">
-              <input type="text" class="agregar-tarea" placeholder="Nueva tarea">
-              <button type="submit" class="agregar-tarea">Agregar</button>
-              
-            </div>
-          </form>
-      
-    </main>
+    </div>
+</header>
+<main>
+    <section class="tareas">
+    </section>
+    <form id="nueva-tarea">
+        <div class="contenedor-formulario">
+            <input type="text" class="agregar-tarea" placeholder="Nueva tarea">
+            <button type="submit" class="agregar-tarea">Agregar</button>
+        </div>
+    </form>
+</main>
     <script src='../components/Timer.astro'></script>
     </body>
 </html>
 
 <style is:global>
 body {
-font-family: sans-serif;
-margin: 20px;
+    font-family: sans-serif;
+    margin: 20px;
 }
 
 /* Cabecera */
 
 header {
-background-color: #333;
-color: #fff;
-padding: 10px;
-display: flex;
-justify-content: space-between;
-align-items: center;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .filtros {
-  display: flex;
+    display: flex;
 }
 
 .filtros button {
-  margin-left: 10px;
+    margin-left: 10px;
 }
 /* Lista de tareas */
 
 .tareas {
-display: flex;
-flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .tarea {
-border: 1px solid #ccc;
-padding: 10px;
-margin: 10px;
-width: 300px;
-display: flex;
-align-items: center;
-justify-content: space-between;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .tarea-completada {
-background-color: #f5f5f5;
-text-decoration: line-through;
-color: #ccc;
+    background-color: #f5f5f5;
+    text-decoration: line-through;
+    color: #ccc;
 }
 
 .checkbox {
-margin-right: 5px;
+    margin-right: 5px;
 
-margin-left: 5px;
+    margin-left: 5px;
 }
 
 .titulo {
-font-weight: bold;
+    font-weight: bold;
 }
 
 .acciones {
-  
-display: flex;
+
+    display: flex;
 }
 
 .acciones button {
-margin-left: 10px;
-padding: 10px;
-background-color: #333;
-color: #fff;
+    margin-left: 10px;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
 }
 
 #nueva-tarea {
-margin-top: 20px;
-}
-
-#nueva-tarea input {
-padding: 10px;
-width: 300px;
-}
-
-#nueva-tarea button {
-padding: 10px;
-background-color: #333;
-color: #fff;
-}
-
-#nueva-tarea {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 .contenedor-formulario {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #nueva-tarea input {
-  padding: 10px;
-  width: 300px;
+    padding: 10px;
+    width: 300px;
 }
 
 #nueva-tarea button {
-  padding: 10px;
-  background-color: #333;
-  color: #fff;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
 }
 
 
@@ -147,7 +132,7 @@ color: #fff;
 }
 
 .acciones .boton-eliminar {
-color: rgb(255, 255, 255);
-font-weight: bold;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
 }
 </style>

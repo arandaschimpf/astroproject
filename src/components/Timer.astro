@@ -3,77 +3,102 @@
 <style></style>
 
 <script >
-const listaTareas = document.querySelector('.tareas');
-const nuevaTareaForm = document.querySelector('#nueva-tarea');
-const tareasPendientes = document.querySelector('.tareas-pendientes');
+    const listaTareas = document.querySelector('.tareas');
+    const nuevaTareaForm = document.querySelector('#nueva-tarea');
+    const tareasPendientes = document.querySelector('.tareas-pendientes');
+    const filtros = document.querySelectorAll('.filtro');
+    const todasLasTareas = [];
 
+    // Función para agregar una nueva tarea
+    function agregarTarea(titulo) {
+        const tarea = document.createElement('div');
+        tarea.classList.add('tarea');
 
-// Función para agregar una nueva tarea
-function agregarTarea(titulo) {
-  const tarea = document.createElement('div');
-  tarea.classList.add('tarea');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.classList.add('marcar-tarea');
+        checkbox.addEventListener('change', () => {
+            tarea.classList.toggle('tarea-completada');
+            actualizarTareasPendientes();
+            filtrarTareas();
+        });
 
-  const checkbox = document.createElement('input');
-  checkbox.type = 'checkbox';
-  checkbox.classList.add('marcar-tarea');
-  checkbox.addEventListener('change', () => {
-    tarea.classList.toggle('tarea-completada');
-    actualizarTareasPendientes();
-  });
+        const tituloElement = document.createElement('h3');
+        tituloElement.classList.add('titulo');
+        tituloElement.textContent = titulo;
 
-  const tituloElement = document.createElement('h3');
-  tituloElement.classList.add('titulo');
-  tituloElement.textContent = titulo;
+        const accionesElement = document.createElement('div');
+        accionesElement.classList.add('acciones');
 
-  const accionesElement = document.createElement('div');
-  accionesElement.classList.add('acciones');
+        const eliminarBoton = document.createElement('button');
+        eliminarBoton.classList.add('boton-eliminar');
+        eliminarBoton.textContent = 'Eliminar';
+        eliminarBoton.addEventListener('click', () => {
+            tarea.parentNode.removeChild(tarea);
+            actualizarTareasPendientes();
+            filtrarTareas();
+        });
+        accionesElement.appendChild(eliminarBoton);
 
-  const eliminarBoton = document.createElement('button');
-  eliminarBoton.classList.add('boton-eliminar');
-  eliminarBoton.textContent = 'Eliminar';
-  eliminarBoton.addEventListener('click', () => {
-    tarea.parentNode.removeChild(tarea);
-    actualizarTareasPendientes();
-  });
-  accionesElement.appendChild(eliminarBoton);
+        tarea.appendChild(checkbox);
+        tarea.appendChild(tituloElement);
+        tarea.appendChild(accionesElement);
 
-  tarea.appendChild(checkbox);
-  tarea.appendChild(tituloElement);
-  tarea.appendChild(accionesElement);
+        listaTareas.appendChild(tarea);
+        todasLasTareas.push(tarea);
+    }
 
-  listaTareas.appendChild(tarea);
+    // Función para actualizar el contador de tareas pendientes
+    function actualizarTareasPendientes() {
+        const tareasPendientesCount = todasLasTareas.filter(tarea => !tarea.classList.contains('tarea-completada')).length;
+        tareasPendientes.textContent = `Tareas pendientes: ${tareasPendientesCount}`;
+    }
 
-  actualizarTareasPendientes();
-}
+    // Función para manejar el filtro de tareas
+    function manejarFiltro(filtroSeleccionado) {
+        todasLasTareas.forEach(tarea => {
+            if (filtroSeleccionado === 'todas') {
+                tarea.style.display = 'block'; // Mostrar todas las tareas
+            } else if (filtroSeleccionado === 'incompletas') {
+                tarea.style.display = tarea.classList.contains('tarea-completada') ? 'none' : 'block';
+            } else if (filtroSeleccionado === 'completas') {
+                tarea.style.display = tarea.classList.contains('tarea-completada') ? 'block' : 'none';
+            }
+        });
+    }
 
-// Función para actualizar el contador de tareas pendientes
-function actualizarTareasPendientes() {
-  const tareasCompletadas = document.querySelectorAll('.tarea-completada');
-  const totalTareas = listaTareas.querySelectorAll('.tarea').length;
-  const tareasPendientesCount = totalTareas - tareasCompletadas.length;
+    // Agregar un evento al formulario para agregar una nueva tarea
+    nuevaTareaForm.addEventListener('submit', (e) => {
+        e.preventDefault();
 
-  tareasPendientes.textContent = `Tareas pendientes: ${tareasPendientesCount}`;
-}
+        const titulo = nuevaTareaForm.querySelector('input').value.trim(); // Quitamos los espacios al inicio y al final del título
 
-// Agregar un evento al formulario para agregar una nueva tarea
-nuevaTareaForm.addEventListener('submit', (e) => {
-  e.preventDefault();
+        if (titulo) {
+            agregarTarea(titulo);
+            nuevaTareaForm.reset(); // Reiniciamos el formulario después de agregar una tarea
+            actualizarTareasPendientes();
+            filtrarTareas();
+        }
+    });
 
-  const titulo = nuevaTareaForm.querySelector('input').value;
+    // Agregar eventos a los botones de filtro
+    filtros.forEach((filtro) => {
+        filtro.addEventListener('click', (e) => {
+            // Remover la clase "activo" de todos los botones de filtro
+            filtros.forEach((btn) => {
+                btn.classList.remove('activo');
+            });
 
-  if (titulo) {
-    agregarTarea(titulo);
-    nuevaTareaForm.querySelector('input').value = '';
-  }
-});
+            // Agregar la clase "activo" al botón clickeado
+            e.target.classList.add('activo');
 
+            // Manejar el filtro de tareas
+            const filtroSeleccionado = e.target.id;
+            manejarFiltro(filtroSeleccionado);
+        });
+    });
 
-
-// Inicializar la aplicación con algunas tareas de ejemplo
-agregarTarea('Comprar leche');
-agregarTarea('Refactorizar el backend');
-agregarTarea('Agregar una nueva función a la aplicación');
-
-actualizarTareasPendientes();
-
-// Mostrar todas las tareas al cargar
+    // Función para filtrar tareas al cargar la página
+    window.addEventListener('DOMContentLoaded', () => {
+        manejarFiltro('todas');
+    });
