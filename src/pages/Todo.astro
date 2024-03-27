@@ -92,8 +92,8 @@
 
 <script>
   //css classes definitions
-  const TODO_LIST = document.getElementById("list") as HTMLHtmlElement;
-  const OPTIONS = document.querySelector(".options") as HTMLHtmlElement;
+  const TODO_LIST = document.getElementById("list") as HTMLDivElement;
+  const OPTIONS = document.querySelector(".options") as HTMLDivElement;
   const CARET = document.getElementById("caret") as HTMLHtmlElement;
   const ITEMS_REMAINING = document.querySelector(
     ".items-remaining"
@@ -109,7 +109,8 @@
   ];
 
   // variable for knowing how much items arent checked
-  let itemsRemaining = MY_LIST_TODO.length;
+  let itemsRemaining: number = TODO_LIST.children.length;
+  console.log(TODO_LIST.children.length);
   ITEMS_REMAINING.textContent = itemsRemaining + " items remaining";
 
   //function that creates tasks from elements of type Task.
@@ -121,6 +122,7 @@
 
     //todo atributes
     TODO_ITEM.textContent = description;
+    itemsRemaining = itemsRemaining + 1;
 
     //todo div atributes
     TODO_DIV.id = Math.random().toString(36).substring(7);
@@ -199,13 +201,15 @@
 
   //clear compleated onclick function
   const clearCompletedOnClick = () => {
-    const TODO_LIST_CONTENT = Array.from(TODO_LIST.children); //esto tiene que estar en la funcion para que se actualice cada vez que se añada un objeto al TODO_LIST
+    let TODO_LIST_CONTENT = Array.from(TODO_LIST.children); //esto tiene que estar en la funcion para que se actualice cada vez que se añada un objeto al TODO_LIST
     for (let x = 0; x < TODO_LIST_CONTENT.length; x++) {
       let aux = getComputedStyle(
         TODO_LIST.children[x].children[1]
       ).textDecoration;
       if (aux.includes("line-through")) {
-        TODO_LIST.children[x].setAttribute("style", "display: none; ");
+        TODO_LIST.removeChild(TODO_LIST_CONTENT[x]);
+        x--; //this is done because when we delete the current position on the array becomes the new position of the next element
+        TODO_LIST_CONTENT = Array.from(TODO_LIST.children);
       } else {
         TODO_LIST.children[x].setAttribute("style", "display: ; ");
       }
@@ -292,7 +296,10 @@
       // printList();
       addTaskToTasklist(INPUTBOX.value.trim(), false);
       INPUTBOX.value = "";
-      fetch('/api/tasks', {method: "POST", body:JSON.stringify({ description: INPUTBOX.value })})
+      fetch("/api/tasks", {
+        method: "POST",
+        body: JSON.stringify({ description: INPUTBOX.value }),
+      });
     }
   });
   // fetch('/api/tasks', {method: "POST", body:JSON.stringify({ description: INPUTBOX.value })})
