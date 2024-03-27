@@ -1,4 +1,5 @@
-import { getTasks } from "../../../services/Task"
+import type { APIContext } from "astro"
+import { createTasks, getTasks } from "../../../services/Task"
 
 export async function GET() {
     const tasksList = await getTasks()
@@ -8,3 +9,10 @@ export async function GET() {
         })
     )
 }
+
+export async function POST(context: APIContext) {
+    const data = await context.request.json()
+    const description = data.description
+    const tasksList = await createTasks(description)
+    return new Response(JSON.stringify({tasksList}))
+  }
