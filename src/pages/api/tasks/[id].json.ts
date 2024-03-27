@@ -12,12 +12,24 @@ export const GET: APIRoute = ({params, request}) => {
     )
 }
 
-export function getStaticPaths(){
-    return [
-        {params: {id: '0'}},
-        {params: {id: '1'}},
-        {params: {id: '2'}}
-    ]
+export const POST: APIRoute = ({request}) => {
+    return new Response(JSON.stringify({
+        message: '¡Esto es un POST!'
+    }))
 }
+
+export const DELETE: APIRoute = ({request}) => {
+    return new Response(JSON.stringify({
+        message: '¡Esto es un DELETE!'
+    }))
+}
+
+export const ALL: APIRoute = ({request}) => {
+    return new Response(JSON.stringify({
+        message: `¡Esto fue un ${request.method}!`
+    }))
+}
+
+
 
 

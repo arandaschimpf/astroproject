@@ -1,31 +1,27 @@
-export async function GET ({params, request}){
-    return {
-        body: {
-            message: 'Tasks index'
-        }
-    }
-}
+import type { APIRoute } from 'astro'   
+import { getTasks } from '../../../services/Tasks'
 
-export async function POST ({params, request}){
-    return {
-        body: {
-            message: 'Tasks create'
-        }
-    }
-}
-
-export async function PUT ({params, request}){
-    return {
-        body: {
-            message: 'Tasks update'
-        }
-    }
-}
-
-export async function DELETE ({params, request}){
-    return {
-        body: {
-            message: 'Tasks delete'
-        }
-    }
-}
+export const GET: APIRoute = ({ params, request }) => {
+    return new Response(JSON.stringify(getTasks()))
+  }
+  
+  export const POST: APIRoute = ({ request }) => {
+    return new Response(JSON.stringify({
+        message: "¡Esto es un POST!"
+      })
+    )
+  }
+  
+  export const DELETE: APIRoute = ({ request }) => {
+    return new Response(JSON.stringify({
+        message: "¡Esto es un DELETE!"
+      })
+    )
+  }
+  
+  export const ALL: APIRoute = ({ request }) => {
+    return new Response(JSON.stringify({
+        message: `¡Esto fue un ${request.method}!`
+      })
+    )
+  }
