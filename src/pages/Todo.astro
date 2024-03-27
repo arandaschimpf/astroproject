@@ -110,7 +110,6 @@
 
   // variable for knowing how much items arent checked
   let itemsRemaining: number = TODO_LIST.children.length;
-  console.log(TODO_LIST.children.length);
   ITEMS_REMAINING.textContent = itemsRemaining + " items remaining";
 
   //function that creates tasks from elements of type Task.
@@ -122,7 +121,8 @@
 
     //todo atributes
     TODO_ITEM.textContent = description;
-    itemsRemaining = itemsRemaining + 1;
+    itemsRemaining++;
+    ITEMS_REMAINING.textContent = itemsRemaining + " items remaining";
 
     //todo div atributes
     TODO_DIV.id = Math.random().toString(36).substring(7);
