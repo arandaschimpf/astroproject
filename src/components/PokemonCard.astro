@@ -1,41 +1,27 @@
 ---
+import { Console } from "console";
 import { getPokemonByUrl } from "../pages/api/pokemons/pokemonIndex";
-type Pokemon = {
-    name: string;
-    url: string;
-}
-const { PokemonArray } = Astro.props.data;
 
+const URL: string = Astro.props.url;
 
+const pokemonDetails = await getPokemonByUrl(URL);
 
-async function formArray() {
-    const urlArray: string[] = []
-    PokemonArray.array.forEach((pokemon: Pokemon) => {
-        urlArray.push(pokemon.url)
-    });
-    return urlArray
-}
-// const pokemonDetails = await getPokemonByUrl(URL);
+console.log(URL, "asdasdasds");
 ---
 
 <div class="pokemon-container">
- {
-
-    PokemonArray.map((Pokemon: Pokemon ) => {
-    const pokemonDetails = await getPokemonByUrl(Pokemon.url);
-    })
- }
-<!--     
   <h2>{pokemonDetails.forms[0].name}</h2>
   <h2>ashjdiahsdkjhask</h2>
-  {console.log(pokemonDetails.forms[0].name)} -->
+  {console.log(pokemonDetails.forms[0].name)}
 </div>
 
 <style>
   .pokemon-container {
-    border-radius: 8%;
+    border-radius: 5%;
     border: 2px solid grey;
     justify-content: center;
     display: block;
+    width: 25%;
+    height: 250px;
   }
 </style>
