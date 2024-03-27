@@ -1,5 +1,16 @@
 ---
 import PokemonCard from "../components/PokemonCard.astro";
+import { getPokemonsApi } from "./api/pokemons/pokemonIndex";
+// type Pokemon = {
+//     name: string;
+//     url: string;
+// }
+
+const PokemonArray = await getPokemonsApi()
+
+
+
+
 ---
 
 <!doctype html>
@@ -11,7 +22,8 @@ import PokemonCard from "../components/PokemonCard.astro";
   </head>
   <body>
     <img src="../../PokemonTitle.png" class="title" />
-    <PokemonCard url="https://pokeapi.co/api/v2/pokemon/1" />
+    <PokemonCard data={PokemonArray} />
+    
   </body>
 </html>
 
@@ -34,4 +46,5 @@ import PokemonCard from "../components/PokemonCard.astro";
   // import { getPokemonsApi } from "./api/pokemons/pokemonIndex";
   // const tqnto = await getPokemonsApi()
   // console.log(tqnto)
+  //
 </script>
