@@ -5,7 +5,11 @@
       <i class="fa-solid fa-chevron-down" id="caret"></i>
       <!-- lo del principio es para agregarle un espacio -->
       <!-- <h2>&nbsp;What needs to be done?</h2> -->
-      <input type="text" id="todo-content" placeholder="  What needs to be done?">
+      <input
+        type="text"
+        id="todo-content"
+        placeholder="  What needs to be done?"
+      />
     </button>
     <div id="list"></div>
     <div class="options">
@@ -83,17 +87,18 @@
   #todo-content {
     outline: none;
     margin-left: 2px;
-
   }
 </style>
 
 <script>
   //css classes definitions
-  const TODO_LIST = document.getElementById("list");
-  const DONE = document.querySelector(".done");
-  const OPTIONS = document.querySelector(".options");
-  const CARET = document.getElementById("caret");
-  const ITEMS_REMAINING = document.querySelector(".items-remaining");
+  const TODO_LIST = document.getElementById("list") as HTMLHtmlElement;
+  const OPTIONS = document.querySelector(".options") as HTMLHtmlElement;
+  const CARET = document.getElementById("caret") as HTMLHtmlElement;
+  const ITEMS_REMAINING = document.querySelector(
+    ".items-remaining"
+  ) as HTMLElement;
+  const INPUTBOX = document.getElementById("todo-content") as HTMLInputElement;
 
   // default list of thing todo definition
   const MY_LIST_TODO = [
@@ -107,15 +112,21 @@
   let itemsRemaining = MY_LIST_TODO.length;
   ITEMS_REMAINING.textContent = itemsRemaining + " items remaining";
 
-  MY_LIST_TODO.forEach((text) => {
-    //html elements declarations
-    const TODO_DIV = document.createElement("div");
-    const TODO_CHECKBOX = document.createElement("div");
+  //function that creates tasks from elements of type Task.
+  function addTaskToTasklist(description: string, completed: boolean) {
+    const TODO_DIV = document.createElement("div") as HTMLDivElement;
+    const TODO_CHECKBOX = document.createElement("div") as HTMLDivElement;
     const TODO_ITEM = document.createElement("h2");
-    const TODO_CHECK = document.createElement("i");
+    const TODO_CHECK = document.createElement("i") as HTMLHtmlElement;
 
-    //todo text
-    TODO_ITEM.textContent = text;
+    //todo atributes
+    TODO_ITEM.textContent = description;
+
+    //todo div atributes
+    TODO_DIV.id = Math.random().toString(36).substring(7);
+    // createTasks(INPUTBOX.value);
+    // TODO_DIV.setAttribute();
+
     //check of the checkbox
     TODO_CHECK.classList.add("fa-solid", "fa-check");
     TODO_CHECKBOX.appendChild(TODO_CHECK);
@@ -128,47 +139,96 @@
     TODO_DIV.appendChild(TODO_ITEM);
     TODO_DIV.classList.add("todo-item");
 
+    if (completed === true) {
+      TODO_ITEM.style.textDecoration = "line-through";
+    }
+
     //linetrough click
     TODO_DIV.addEventListener("click", () => {
       if (TODO_ITEM.style.textDecoration === "line-through") {
-        TODO_ITEM.style.textDecoration = null;
+        TODO_ITEM.style.textDecoration = "none";
         TODO_ITEM.style.color = "#000000";
-        TODO_CHECKBOX.checked = false;
-        TODO_CHECK.style.opacity = 0;
+        TODO_CHECK.style.opacity = "0";
         itemsRemaining = itemsRemaining + 1;
         ITEMS_REMAINING.textContent = itemsRemaining + " items remaining";
-        // dinamicClick();
       } else {
         TODO_ITEM.style.textDecoration = "line-through";
         TODO_ITEM.style.color = "#a29e9e";
-        TODO_CHECKBOX.checked = true;
-        TODO_CHECK.style.opacity = 1;
+        TODO_CHECK.style.opacity = "1";
         itemsRemaining = itemsRemaining - 1;
         ITEMS_REMAINING.textContent = itemsRemaining + " items remaining";
-        // dinamicClick();
       }
     });
     TODO_LIST.appendChild(TODO_DIV);
-  });
+  }
+
+  //foreach
+  // MY_LIST_TODO.forEach((text) => {
+  //   //html elements declarations
+  //   const TODO_DIV = document.createElement("div");
+  //   const TODO_CHECKBOX = document.createElement("div");
+  //   const TODO_ITEM = document.createElement("h2");
+  //   const TODO_CHECK = document.createElement("i");
+  //   const TODO_ID = Math.random().toString(36).substring(7);
+
+  //   //todo atributes
+  //   TODO_ITEM.textContent = text;
+
+  //   //todo div atributes
+  //   TODO_DIV.id = TODO_ID;
+  //   // TODO_DIV.setAttribute("Completed", "false");
+
+  //   //check of the checkbox
+  //   TODO_CHECK.classList.add("fa-solid", "fa-check");
+  //   TODO_CHECKBOX.appendChild(TODO_CHECK);
+
+  //   //circle of the checkbox
+  //   TODO_CHECKBOX.classList.add("check-box");
+
+  //   //div of the todos
+  //   TODO_DIV.appendChild(TODO_CHECKBOX);
+  //   TODO_DIV.appendChild(TODO_ITEM);
+  //   TODO_DIV.classList.add("todo-item");
+
+  //   //linetrough click
+  //   TODO_DIV.addEventListener("click", () => {
+  //     if (TODO_ITEM.style.textDecoration === "line-through") {
+  //       TODO_ITEM.style.textDecoration = null;
+  //       TODO_ITEM.style.color = "#000000";
+  //       TODO_CHECKBOX.checked = false;
+  //       TODO_CHECK.style.opacity = 0;
+  //       itemsRemaining = itemsRemaining + 1;
+  //       ITEMS_REMAINING.textContent = itemsRemaining + " items remaining";
+  //     } else {
+  //       TODO_ITEM.style.textDecoration = "line-through";
+  //       TODO_ITEM.style.color = "#a29e9e";
+  //       TODO_CHECKBOX.checked = true;
+  //       TODO_CHECK.style.opacity = 1;
+  //       itemsRemaining = itemsRemaining - 1;
+  //       ITEMS_REMAINING.textContent = itemsRemaining + " items remaining";
+  //     }
+  //   });
+  //   TODO_LIST.appendChild(TODO_DIV);
+  // });
 
   // To Do's click
   CARET.addEventListener("click", () => {
     if (TODO_LIST.style.display === "block") {
       TODO_LIST.style.display = "none";
       CARET.style.transform = "rotate(0deg)";
-      DONE.style.color = "#000000";
+      CARET.style.color = "#000000";
     } else {
       TODO_LIST.style.display = "block";
       CARET.style.transform = "rotate(90deg)";
-      DONE.style.color = "#a29e9e";
+      CARET.style.color = "#a29e9e";
     }
   });
 
   //declaration of the id's of the bottom options
-  const COMPLETED = document.getElementById("completed");
-  const SEE_ALL = document.getElementById("all");
-  const CLEAR_COMPLETED = document.getElementById("clear");
-  const ACTIVE = document.getElementById("active");
+  const COMPLETED = document.getElementById("completed") as HTMLButtonElement;
+  const SEE_ALL = document.getElementById("all") as HTMLButtonElement;
+  const CLEAR_COMPLETED = document.getElementById("clear") as HTMLButtonElement;
+  const ACTIVE = document.getElementById("active") as HTMLButtonElement;
 
   //see all onclick function
   const seeAllOnClick = () => {
@@ -274,18 +334,14 @@
     }
   }
 
-  const INPUTBOX = document.getElementById('todo-content');
-
-                // INPUTBOX.addEventListener('keydown', (event) => {
-                //     if (event.key === 'Enter') {
-                //         const NEWITEM = INPUTBOX.value.trim();
-
-                //         TITLE_LIST.push(NEWITEM); 
-                //         printList(); 
-                //         INPUTBOX.value = ''; 
-                        
-                //     }
-                // });
+  INPUTBOX.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      // addTaskToTasklist()
+      // printList();
+      addTaskToTasklist(INPUTBOX.value.trim(), false);
+      INPUTBOX.value = "";
+    }
+  });
 
   seeAllOnClick(); //this makes the all square start apearing
 
