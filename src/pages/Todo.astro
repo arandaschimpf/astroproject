@@ -163,53 +163,9 @@
   }
 
   //foreach
-  // MY_LIST_TODO.forEach((text) => {
-  //   //html elements declarations
-  //   const TODO_DIV = document.createElement("div");
-  //   const TODO_CHECKBOX = document.createElement("div");
-  //   const TODO_ITEM = document.createElement("h2");
-  //   const TODO_CHECK = document.createElement("i");
-  //   const TODO_ID = Math.random().toString(36).substring(7);
-
-  //   //todo atributes
-  //   TODO_ITEM.textContent = text;
-
-  //   //todo div atributes
-  //   TODO_DIV.id = TODO_ID;
-  //   // TODO_DIV.setAttribute("Completed", "false");
-
-  //   //check of the checkbox
-  //   TODO_CHECK.classList.add("fa-solid", "fa-check");
-  //   TODO_CHECKBOX.appendChild(TODO_CHECK);
-
-  //   //circle of the checkbox
-  //   TODO_CHECKBOX.classList.add("check-box");
-
-  //   //div of the todos
-  //   TODO_DIV.appendChild(TODO_CHECKBOX);
-  //   TODO_DIV.appendChild(TODO_ITEM);
-  //   TODO_DIV.classList.add("todo-item");
-
-  //   //linetrough click
-  //   TODO_DIV.addEventListener("click", () => {
-  //     if (TODO_ITEM.style.textDecoration === "line-through") {
-  //       TODO_ITEM.style.textDecoration = null;
-  //       TODO_ITEM.style.color = "#000000";
-  //       TODO_CHECKBOX.checked = false;
-  //       TODO_CHECK.style.opacity = 0;
-  //       itemsRemaining = itemsRemaining + 1;
-  //       ITEMS_REMAINING.textContent = itemsRemaining + " items remaining";
-  //     } else {
-  //       TODO_ITEM.style.textDecoration = "line-through";
-  //       TODO_ITEM.style.color = "#a29e9e";
-  //       TODO_CHECKBOX.checked = true;
-  //       TODO_CHECK.style.opacity = 1;
-  //       itemsRemaining = itemsRemaining - 1;
-  //       ITEMS_REMAINING.textContent = itemsRemaining + " items remaining";
-  //     }
-  //   });
-  //   TODO_LIST.appendChild(TODO_DIV);
-  // });
+  MY_LIST_TODO.forEach((text) => {
+    addTaskToTasklist(text, false);
+  });
 
   // To Do's click
   CARET.addEventListener("click", () => {
@@ -248,9 +204,7 @@
       let aux = getComputedStyle(
         TODO_LIST.children[x].children[1]
       ).textDecoration;
-      // console.log(getComputedStyle(TODO_LIST.children[x]))
       if (aux.includes("line-through")) {
-        // console.log("hi there");
         TODO_LIST.children[x].setAttribute("style", "display: none; ");
       } else {
         TODO_LIST.children[x].setAttribute("style", "display: ; ");
@@ -315,7 +269,6 @@
       getComputedStyle(SEE_ALL).border === "0.666667px solid rgb(162, 158, 158)"
     ) {
       // seeAllOnClick();
-      console.log("See All");
     } else {
       if (
         getComputedStyle(ACTIVE).border ===
@@ -329,7 +282,6 @@
         "0.666667px solid rgb(162, 158, 158)"
       ) {
         completedOnClick();
-        console.log("compleated");
       }
     }
   }
