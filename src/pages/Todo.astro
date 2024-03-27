@@ -292,8 +292,10 @@
       // printList();
       addTaskToTasklist(INPUTBOX.value.trim(), false);
       INPUTBOX.value = "";
+      fetch('/api/tasks', {method: "POST", body:JSON.stringify({ description: INPUTBOX.value })})
     }
   });
+  // fetch('/api/tasks', {method: "POST", body:JSON.stringify({ description: INPUTBOX.value })})
 
   seeAllOnClick(); //this makes the all square start apearing
 
