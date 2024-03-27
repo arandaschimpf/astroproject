@@ -1,11 +1,21 @@
 ---
-type Props = {
-    url: string
-  }
+import { getPokemonByUrl } from "../pages/api/pokemons/pokemonIndex";
 
- 
-
-  const URL = Astro.props.url
-
-
+const URL: string = Astro.props.url;
+const pokemonDetails = await getPokemonByUrl(URL);
 ---
+
+<div class="pokemon-container">
+  <h2>{pokemonDetails.forms[0].name}</h2>
+  <h2>ashjdiahsdkjhask</h2>
+  {console.log(pokemonDetails.forms[0].name)}
+</div>
+
+<style>
+  .pokemon-container {
+    border-radius: 8%;
+    border: 2px solid grey;
+    justify-content: center;
+    display: block;
+  }
+</style>
