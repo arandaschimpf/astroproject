@@ -13,11 +13,13 @@
     "@astrojs/check": "^0.4.1",
     "@astrojs/tailwind": "^5.1.0",
     "astro": "^4.1.2",
+    "express": "^4.19.2",
     "nedb-promises": "^6.2.3",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3"
   },
   "devDependencies": {
+    "@types/express": "^4.17.21",
     "@types/node": "^20.11.19"
   }
 }

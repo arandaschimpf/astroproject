@@ -1,13 +1,13 @@
 ---
 
 
-
 ---
 
 <h1 class="tittle">todos</h1>
 <div class="linea">
     <ol class="form">
-        <li><span class="icon grayLetter"></span>What needs to be done?</li>
+        <li><span class="icon "></span><input id="circleCheckbox1" placeholder="What needs to be done?">
+        </li>
         <hr class="hr">
         <li><input type="checkbox" class="check" id="circleCheckbox1"><label for="circleCheckbox1">Go Shopping</label></li>
         <hr class="hr">
@@ -16,44 +16,312 @@
         <li><input class="check" type="checkbox" id="circleCheckbox3"><label for="circleCheckbox3">Add new feature to app</label></li>
         <hr class="hr">
         <li><input class="check" type="checkbox" id="circleCheckbox4"><label for="circleCheckbox4">Todo 1</label></li>
-
-        <img class="img" src="cruz.png" />
-
         <hr class="hr">
-        <span class="text1">3 items left</span>
-        <span class="text2">All</span>
-        <span class="text3">Active</span>
-        <span class="text4">Completed</span>
-        <span class="text5">Clear Completed</span>
-
-
-
+     
     </ol>
+    <span class="text1">0 items left</span>
+    <span class="text2">All</span>
+    <span class="text3">Active</span>
+    <span class="text4">Completed</span>
+    <span id="clearCompleted" class="text5">Clear Completed</span>
 </div>
+<script>
+
+
+import path from "path";
 
 
 
-<script> 
-</script>
+//ALL
+document.addEventListener('DOMContentLoaded', async function() {
+    const response = await fetch('/api');
+    const { tasks } = await response.json();
+    // Handle tasks data here
+});
 
+document.addEventListener('change', (e) => {
+    // @ts-ignore
+    if (!e.target?.matches('input[type="checkbox"]')) { return }
+    const id = 1
+    fetch(`/api/${id}`, { method: 'PUT' })
+})
 
-<style is:global>
-
-
-
-
-  
-
-.img{
-  width: 10px;
-  height: 10px;
-  
-  margin-left: 585px;
-  cursor: pointer;
+async function createTask(title : string) {
+    await fetch('/api', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ title })
+    });
 }
 
 
 
+
+async function deletedCompletedtasks() {
+    await fetch('/api', {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        
+    });
+}
+
+
+
+async function toggleTasks() {
+    await fetch('/api', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        
+    });
+}
+
+
+
+//---------------------------------------------------------------------------------------
+document.addEventListener('DOMContentLoaded', function() {
+   
+    
+   var activeText = document.querySelector('.text2');
+   if (activeText) {
+       activeText.addEventListener('click', showAllCards);
+   }
+});
+
+function showAllCards() {
+    var cards = document.querySelectorAll('.form li:not(:first-child)'); 
+    cards.forEach(function(card) {
+        var element = card as HTMLElement;
+        element.style.display = 'block';
+    });
+}
+//--------------------------------------------------------------------------------------
+
+
+
+
+
+
+//Active
+document.addEventListener('DOMContentLoaded', function() {
+   
+    
+    var activeText = document.querySelector('.text3');
+    if (activeText) {
+        activeText.addEventListener('click', toggleActiveTaskLists);
+    }
+    
+    
+});
+
+
+
+
+function toggleActiveTaskLists() {
+    var taskLists = document.querySelectorAll('.form li:not(:first-child)'); // Exclude the placeholder task list
+    taskLists.forEach(function(taskList) {
+        var checkbox = taskList.querySelector('.check') as HTMLInputElement;
+        var element = taskList as HTMLElement;
+        if (checkbox && !checkbox.checked) {
+            // If the task list is not checked
+            element.style.display = 'block'; // Show the task list
+        } else {
+            // If the task list is checked
+            element.style.display = 'none'; // Hide the task list
+        }
+    });
+}
+//----------------------------------------------------------------------------------------------------------
+
+
+//Completed
+document.addEventListener('DOMContentLoaded', function() {
+   
+    
+   var activeText = document.querySelector('.text4');
+   if (activeText) {
+       activeText.addEventListener('click', toggleAllTaskLists);
+   }
+   
+   
+
+});
+
+function toggleAllTaskLists() {
+    var taskLists = document.querySelectorAll('.form li:not(:first-child)');
+    taskLists.forEach(function(taskList) {
+        var checkbox = taskList.querySelector('.check') as HTMLInputElement;
+        var element = taskList as HTMLElement;
+        if (checkbox && checkbox.checked) {
+            // If the task list is checked
+            element.style.display = 'block'; // Show the task list
+        } else {
+            // If the task list is not checked or there is no checkbox
+            element.style.display = 'none'; // Hide the task list
+        }
+    });
+}
+//----------------------------------------------------------------------------------------------------------------------
+
+
+
+
+//Select flechita
+document.addEventListener('DOMContentLoaded', function() {
+    var icon = document.querySelector('.icon');
+    if (icon) {
+        icon.addEventListener('click', toggleTaskLists);
+    }
+});
+
+function toggleTaskLists() {
+    var taskLists = document.querySelectorAll('.form li:not(:first-child)');
+    var taskLists2 = document.querySelectorAll('.form li:not(:first-child)');
+
+    
+    taskLists.forEach(function(taskList) {
+         
+        if(taskList){
+        var element = taskList as HTMLElement;
+        
+        element.style.display = 'none'; 
+        } else {
+
+            taskLists2.forEach(function(taskLists2){
+                var element2 = taskList as HTMLElement;
+
+                 element2.style.display = 'none'; 
+
+            })
+            
+
+            
+
+        }
+    });
+}
+//----------------------------------------------------------------------------------------------------------------------------
+
+
+
+//Clear completed
+document.addEventListener('DOMContentLoaded', function() {
+    var clearCompletedSpan = document.getElementById('clearCompleted');
+    if (clearCompletedSpan) {
+        clearCompletedSpan.addEventListener('click', clearCompleted);
+    }
+});
+
+
+
+function clearCompleted() {
+    var checkboxes = document.querySelectorAll('.check:checked');
+    checkboxes.forEach(function(checkbox) {
+        if (checkbox instanceof HTMLInputElement) {
+            var listItem = checkbox.parentElement;
+            if(listItem instanceof HTMLElement){
+                listItem.remove();
+            }
+        }
+    });
+
+    deletedCompletedtasks();
+
+    updateItemsLeft(); 
+}
+//-----------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//Name of items left
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOMContentLoaded event listener is triggered');
+    var checkboxes = document.querySelectorAll('.check');
+    checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            console.log('Checkbox change event is triggered');
+            updateItemsLeft();
+        });
+    });
+});
+
+
+function updateItemsLeft() {
+    console.log('Updating items left...');
+    var uncheckedCheckboxes = document.querySelectorAll('.check:not(:checked)');
+    var itemsLeftText = document.querySelector('.text1');
+    if (itemsLeftText) {
+        itemsLeftText.textContent = uncheckedCheckboxes.length + " item" + (uncheckedCheckboxes.length !== 1 ? "s" : "") + " left";
+    }
+}
+//----------------------------------------------------------------------------------------------------------------------------------------
+
+
+//Add item
+document.addEventListener('DOMContentLoaded', function() {
+    var inputElement = document.getElementById('circleCheckbox1');
+    if (inputElement) {
+        inputElement.addEventListener('keydown', addItem);
+    }
+
+    var allText = document.querySelector('.text2');
+    if (allText) {
+        allText.addEventListener('click', selectAllCheckboxes);
+    }
+
+function selectAllCheckboxes(){
+    var checkboxes = document.querySelectorAll('.check');
+    checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', updateItemsLeft);
+    });
+}
+
+
+});
+//--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+//Enter
+function addItem(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+        var input = event.target as HTMLInputElement;
+        if (!input.parentElement) return; 
+        var text = input.value.trim();
+        if (text !== '') {
+            var listItem = document.createElement('li');
+            listItem.innerHTML = `<input type="checkbox" class="check"><label class="labelInput">${text}</label>
+            <hr>`;
+
+            input.parentElement.appendChild(listItem);
+            createTask(text)
+            input.value = '';
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+</script>
+
+
+
+
+
+<style is:global>
+
+.labelInput{
+  color: black;
+}
+  
 .check {
     width: 1.2em; /* Adjust size as needed */
     height: 1.2em; /* Adjust size as needed */
@@ -61,12 +329,11 @@
     border-radius: 50%; /* Make the checkbox circular */
     vertical-align: middle;
     border: 1px solid #ddd;
-    -webkit-appearance: none;
+    appearance: none;
     outline: none;
     cursor: pointer;
     position: relative;
 }
-
 
 
 .check:checked::after {
@@ -78,7 +345,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
-
 
 
 .text1{
@@ -96,14 +362,10 @@
 }
 
 
-
-
-
-
 .text2{
   font-size: 12px;
   padding-top: 25px;
-  padding-left: 200px;
+  padding-left: 100px;
   color: rgba(136, 119, 119, 0.486);
   cursor: pointer;
 }
@@ -111,7 +373,7 @@
 .text3{
   font-size: 12px;
   padding-top: 25px;
-  padding-left: 8px;
+  padding-left: 1px;
   color: rgba(136, 119, 119, 0.486);
   cursor: pointer;
 }
@@ -119,7 +381,7 @@
 .text4{
   font-size: 12px;
   padding-top: 25px;
-  padding-left: 4px;
+  padding-left: 70px;
   color: rgba(136, 119, 119, 0.486);
   cursor: pointer;
 }
@@ -150,8 +412,11 @@
   border-radius: 20px;
   background-color: white;
   width: 600px;
-  height: 300px;
+  height: 350px;
+  overflow-y: auto;
   box-shadow: 5px 15px 10px black;
+  padding: 20px;
+  margin-bottom: 20px;
   
   border-width: none;
   border-style: solid;
@@ -166,10 +431,17 @@
 .form{
   
   font-size: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.form li {
+  list-style: none; 
 }
 
 
 .icon{
+    
   background-image: url('flechita.png');
   background-size: 20px;
   background-color: ;
@@ -196,9 +468,4 @@
   
   
 }
-
-
-
-
-
 </style>
