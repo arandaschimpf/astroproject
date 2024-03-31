@@ -1,10 +1,10 @@
 
 
 
-export async function getPokemonsApi() {
+export async function getPokemonsApi(url: string) {
     try {
-        const url = `https://pokeapi.co/api/v2/pokemon?limit=10&offset=0`
-        const response = await fetch(url);
+        const URL = url
+        const response = await fetch(URL);
         const result = await response.json();
         return result
     } catch (error) {

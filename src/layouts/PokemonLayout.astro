@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Pokedex</title>
+  </head>
+  <body>
+    <!-- <img src="../../PokemonTitle.png" class="title" /> -->
+  </body>
+
+  <style is:global>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .title {
+      width: 70%;
+    }
+
+    .columns {
+      display: flex;
+      flex-wrap: wrap; /* Para que los elementos se envuelvan a la siguiente línea */
+      justify-content: space-between;
+      margin-left: 100px;
+      margin-right: 100px;
+    }
+
+    /* Estilo para cada columna (cada PokemonCard) */
+    .columns > * {
+      flex-basis: calc(33.33% - 10px); /* Ancho de cada columna */
+    }
+
+    /* card layout */
+    .pokemon-container {
+      border-radius: 5%;
+      border: 2px solid grey;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+      width: 25%;
+      padding: 25px;
+      margin: 40px;
+      align-content: center;
+      justify-content: center;
+      text-align: center;
+      background-color: rgba(93, 172, 212, 0.667);
+    }
+    .pokemon-name {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 50px;
+    }
+    .id {
+      text-align: left;
+      color: #ffffff;
+    }
+  </style>
+</html>

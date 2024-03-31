@@ -1,15 +1,25 @@
 ---
-import PokemonCard from "../components/PokemonCard.astro";
-import { getPokemonsApi } from "./api/pokemons/pokemonIndex";
-type Pokemon = {
-  name: string;
-  url: string;
-};
+// import PokemonCard from "../components/PokemonCard.astro";
+// import { getPokemonsApi } from "./api/pokemons/pokemonIndex";
 
-const PokemonArray = await getPokemonsApi();
+// type Pokemon = {
+//   name: string;
+//   url: string;
+// };
 
-const pokemonDetails: Pokemon[] = PokemonArray.results;
+// const PokemonArray = await getPokemonsApi(
+//   `https://pokeapi.co/api/v2/pokemon?limit=10&offset=0`
+// );
+
+// export const pokemonDetails: Pokemon[] = [];
+// pokemonDetails.push(...PokemonArray.results); //the three dots are called express operator, it decomposes the array by single elements
+
+// loadMorePokemons();
 // console.log(pokemonDetails);
+// console.log("------------  1  -----------\n", pokemonDetails);
+
+// export let pokemonNumber = 10;
+////////////////////////////////////////////////////////////////////////
 ---
 
 <!doctype html>
@@ -17,20 +27,105 @@ const pokemonDetails: Pokemon[] = PokemonArray.results;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
   </head>
   <body>
+    <button id="test-button">Load More Pokemons</button>
+    <!-- <button>Load More Pokemons</button> -->
+    <!-- <h1>hello world</h1> -->
     <img src="../../PokemonTitle.png" class="title" />
     <div class="columns">
-      {
+      <!-- {
         pokemonDetails.map((data: Pokemon) => {
           return <PokemonCard url={data.url} />;
         })
-      }
-      <!-- <PokemonCard url={PokemonArray.results[0].url} />; -->
+      } -->
     </div>
   </body>
 </html>
+
+<style></style>
+
+<script>
+  import {
+    getPokemonByUrl,
+    getPokemonsApi,
+  } from "../pages/api/pokemons/pokemonIndex";
+
+  type Pokemon = {
+    name: string;
+    url: string;
+  };
+
+  const columns = document.querySelector(".columns") as HTMLDivElement;
+
+  async function createPokemonContainer(pokemon: Pokemon) {
+    const result = await getPokemonByUrl(pokemon.url);
+
+    const POKEMON_CONTAINER = document.createElement("div") as HTMLDivElement;
+    const POKEMON_NUMBER = document.createElement("h2") as HTMLHeadElement;
+    const POKEMON_IMAGE = document.createElement("img") as HTMLImageElement;
+    const POKEMON_NAME = document.createElement("h2") as HTMLHeadElement;
+
+    POKEMON_CONTAINER.classList.add(".pokemon-container");
+    POKEMON_NUMBER.classList.add(".id");
+    POKEMON_NAME.classList.add(".pokemon-name");
+
+    POKEMON_NUMBER.textContent = result.id;
+    POKEMON_IMAGE.src = result.sprites.front_default;
+    POKEMON_IMAGE.alt = result.forms[0].name;
+    POKEMON_NAME.textContent = result.forms[0].name;
+
+    POKEMON_CONTAINER.appendChild(POKEMON_NUMBER);
+    POKEMON_CONTAINER.appendChild(POKEMON_IMAGE);
+    POKEMON_CONTAINER.appendChild(POKEMON_NAME);
+
+    columns.appendChild(POKEMON_CONTAINER);
+  }
+
+  let pokemonNumber = 0;
+  const getPokemons = async () => {
+    try {
+      // Cargar más Pokémon desde la API
+      const PokemonArray: Pokemon[] = [];
+      const response = await getPokemonsApi(
+        `https://pokeapi.co/api/v2/pokemon?limit=10&offset=${pokemonNumber}`
+      );
+      PokemonArray.push(...response.results);
+      console.log(response.results);
+
+      // Agregar los nuevos Pokémon a la lista existente
+      PokemonArray.forEach((pokemon: Pokemon) => {
+        createPokemonContainer(pokemon);
+      });
+      // Incrementar el número de Pokémon cargados
+      pokemonNumber = pokemonNumber + 10;
+      // console.log("-----------------------\n", PokeArray.results);
+    } catch (error) {
+      console.error("Error al cargar más Pokémon:", error);
+    }
+  };
+
+  window.addEventListener("scroll", () => {
+    // Altura total de la página, incluyendo el contenido desplazable
+    const fullHeight = document.documentElement.scrollHeight;
+    // Altura de la ventana del navegador
+    const windowHeight = window.innerHeight;
+    // Posición actual del scroll vertical
+    const scrollPosition = window.scrollY;
+
+    // Si la posición del scroll + la altura de la ventana es mayor o igual a la altura total de la página
+    // significa que el usuario ha llegado al final de la página
+    if (scrollPosition + windowHeight >= fullHeight) {
+      console.log("Has llegado al final de la página.");
+      // getMorePokemons();
+    }
+  });
+
+  const Test_Button = document.getElementById(
+    "test-button"
+  ) as HTMLButtonElement;
+  Test_Button.addEventListener("click", () => getPokemons());
+</script>
 
 <style>
   body {
@@ -41,7 +136,7 @@ const pokemonDetails: Pokemon[] = PokemonArray.results;
   }
 
   .title {
-    width: 80%;
+    width: 70%;
   }
 
   .columns {
@@ -55,5 +150,29 @@ const pokemonDetails: Pokemon[] = PokemonArray.results;
   /* Estilo para cada columna (cada PokemonCard) */
   .columns > * {
     flex-basis: calc(33.33% - 10px); /* Ancho de cada columna */
+  }
+
+  /* card layout */
+  .pokemon-container {
+    border-radius: 5%;
+    border: 2px solid grey;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    padding: 25px;
+    margin: 40px;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    background-color: rgba(93, 172, 212, 0.667);
+  }
+  .pokemon-name {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 50px;
+  }
+  .id {
+    text-align: left;
+    color: #ffffff;
   }
 </style>

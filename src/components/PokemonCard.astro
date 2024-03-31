@@ -1,29 +1,48 @@
 ---
-import { Console } from "console";
 import { getPokemonByUrl } from "../pages/api/pokemons/pokemonIndex";
 
 const URL: string = Astro.props.url;
 
 const pokemonDetails = await getPokemonByUrl(URL);
 
-console.log(URL, "asdasdasds");
+// console.log(URL, "asdasdasds");
 ---
 
 <div class="pokemon-container">
-  <h2>{pokemonDetails.forms[0].name}</h2>
-  {console.log(pokemonDetails.forms[0].name)}
+  <h2 class="id">#{pokemonDetails.id}</h2>
+  <img
+    src={pokemonDetails.sprites.front_default}
+    alt={pokemonDetails.forms[0].name}
+  />
+  <h2 class="pokemon-name">{pokemonDetails.forms[0].name}</h2>
 </div>
 
-<style>
-  .pokemon-container {
-    border-radius: 5%;
-    border: 2px solid grey;
-    justify-content: center;
-    display: block;
-    width: 25%;
-    padding: 25px;
-    margin: 40px;
-    align-content: center;
-    justify-content: center;
+<style></style>
+
+<script>
+  const CARD_DIV = document.querySelector(".pokemon-container");
+  const NAME_CLASS = document.querySelector(".pokemon-name");
+  const POKEMON_ID = document.querySelector(".id");
+
+  async function createPokemonContainer(pokemon: Pokemon) {
+    const POKEMON_CONTAINER = document.createElement("div") as HTMLDivElement;
+    const POKEMON_NUMBER = document.createElement("h2") as HTMLHeadElement;
+    const POKEMON_IMAGE = document.createElement("img") as HTMLImageElement;
+    const POKEMON_NAME = document.createElement("h2") as HTMLHeadElement;
+
+    POKEMON_CONTAINER.classList.add(".pokemon-container");
+    POKEMON_NUMBER.classList.add(".id");
+    POKEMON_NAME.classList.add(".pokemon-name");
+
+    POKEMON_NUMBER.textContent = "";
+    POKEMON_IMAGE.src = "none";
+    POKEMON_IMAGE.alt = "";
+    POKEMON_NAME.textContent = "";
+
+    POKEMON_CONTAINER.appendChild(POKEMON_NUMBER);
+    POKEMON_CONTAINER.appendChild(POKEMON_IMAGE);
+    POKEMON_CONTAINER.appendChild(POKEMON_NAME);
+
+    return POKEMON_CONTAINER;
   }
-</style>
+</script>
