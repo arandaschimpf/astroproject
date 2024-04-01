@@ -1,9 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro"
 import ImageCard from '../components/ImageCard.astro'
+import TaskBoard from "../components/tasks/TaskBoard.astro"
+import Timer from "../components/Timer.astro"
+import ListMine from "../components/taskMio/listMine.astro"
+
 const id = Astro.params.id ?? '1'
 ---
 
-<Layout title="Pagina">
-  <ImageCard id={id}/>
+<Layout title="time">
+  <ListMine id={id}/>
 </Layout>

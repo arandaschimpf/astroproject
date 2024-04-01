@@ -1,0 +1,307 @@
+---
+type Props = {
+  id: string
+}
+
+const id = Astro.props.id
+import { getTaskList } from '../../service/task'
+const tasks = await getTaskList()
+---
+
+<section class="cuadro-general">
+ 
+  <h1 class="title text-[#f97316]">to dos</h1>
+  <section class="cuadro">
+      <li class="box_up flex" >
+        <div class="sub-box">
+          <img src="../public/down.svg" class="dropdown__arrow">
+          <input type="checkbox" class="dropdown__check">
+
+          <input  type ="text" id="sub-title" placeholder=" What needs to be done?" />
+        </div>
+
+
+      <div class="dropdown__content">
+        <ul  id="lista" class="dropdown__sub">
+          
+        </ul> 
+        
+        <div class="bloque-inferior">
+          <h6 class="cant_item " > 0 left to do</h6>
+          <div >
+            <button class="but_inf bg-aqua" id="all">All</button>
+            <button class="but_inf" id="active">Active</button>
+            <button class="but_inf" id="completed">completed</button>
+          </div>
+          <button class="clear-completed">Clear Completed</button>
+        </div>
+      </div> 
+    </li> 
+    
+      
+</section>
+
+</section>
+
+<style>
+
+  body{
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    height: 60vh;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(196, 194, 194);
+  }
+  .cuadro{
+    background-color: rgb(255, 255, 255);
+    padding: 10px 0;
+    min-width: 500px;
+    min-height: 60px;
+
+  }
+  .box_up{
+    display: inline;
+
+  } 
+  .column{
+    padding: 5px 0;
+  }
+  .sub-box{
+    display: flex;
+  }
+
+  .sub-box, .column{
+    border-bottom: 1px solid #000000;
+    
+  }
+
+ .dropdown__sub{
+  overflow: hidden;
+ }
+ .dropdown__arrow{
+  transform: var(--rotate, 0);
+  transition: .3s transform;
+ }
+ 
+ .box_up:has(:checked) {
+    --rows: 1fr;
+    --rotate: rotate(180deg);
+  }
+
+  .dropdown__check{
+    position:absolute;
+    width: -10%;
+    height: 2%;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .dropdown__arrow{
+    margin-left: 5px;
+  }
+
+  .cuadro-general{
+
+    padding-right:100px;;
+    border-radius: 5%;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .title{
+    font-size:x-large;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+   
+  }
+
+
+ .dropdown__content{
+     display: grid;
+     grid-template-rows: var(--rows, 0fr);
+     
+     
+  }
+
+  .bloque-inferior{
+    padding: 0 15px;
+    margin: 10px 0 -10px 0;
+    display:flex;
+    font-size:x-small;
+    justify-content: space-between;
+    
+  }
+  .but_inf{
+    margin: 0 7px;
+    padding: 0 5px 0 5px;
+    border: 0;
+    border-radius: 5px;
+    background-color:rgb(255, 255, 255);
+    cursor: pointer;
+
+  }
+  /* Estilo cuando el botón está activo (haciendo clic) */
+  .but_inf :hover{
+   background-color: none;
+  }
+  .but_inf :active{
+    background-color:aqua;
+    transform: scale(0.9);
+  }
+
+  input{
+    margin: 0 10px;
+    
+  }
+  .clear-completed{
+    text-decoration: underline;
+    color: #050505;
+  }
+
+
+      </style>
+
+<script>
+  //Si presiono el botón active se cumpla la function active
+const buttonActive = document.querySelector('#active')
+buttonActive?.addEventListener("click",() => {
+  active();
+
+})
+function active(){
+  //recorro las listas y veo los elementos que no están checkeados
+  var listas = document.querySelector("#lista")?.children;
+  all();
+for(var i = 0; i < listas.length; i++){
+  if(listas[i].firstChild.checked){
+    listas[i].style.display = "none";
+  } 
+}
+}
+
+  //Si presiono el botón buttonAll se cumpla la function all
+const buttonAll = document.querySelector('#all')
+buttonAll?.addEventListener("click",() => {
+  all();
+
+})
+function all(){
+  //recorro las listas y veo todos los elementos
+  var listas = document.querySelector("#lista")?.children;
+
+for(var i = 0; i < listas.length; i++){
+  if(listas[i].style.display == "none"){
+    listas[i].style.display = "flex";
+  } 
+}
+}
+
+  //Si presiono el botón buttonCompleted se cumpla la function completed
+const buttonCompleted = document.querySelector('#completed')
+buttonCompleted?.addEventListener("click",() => {
+  completed();
+
+})
+function completed(){
+    //recorro las listas y veo los elementos que están checkeados
+  var listas = document.querySelector("#lista")?.children;
+all();
+for(var i = 0; i < listas.length; i++){
+  if(!listas[i].firstChild.checked){
+    listas[i].style.display = "none";
+  } 
+}
+}
+
+  //Si presiono el botón buttonClear se cumpla la function deletedCompleted
+const buttonClear = document.querySelector('.clear-completed')
+buttonClear?.addEventListener("click",() => {
+  deleteCompleted();
+
+})
+
+
+function deleteCompleted(){
+  var listas = document.querySelector("#lista")?.children;
+      //recorro las listas y veo los elementos que están checkeados y los remuevo del nodo padre
+  for(var i = 0; i < listas.length; i++){
+    if(listas[i].firstChild.checked){
+      document.getElementById("lista").removeChild(listas[i]);
+    } 
+  }
+  for(var i = 0; i < listas.length; i++){
+    if(listas[i].firstChild.checked){
+      document.getElementById("lista").removeChild(listas[i]);
+    } 
+  }
+}
+
+document.getElementById("sub-title")?.addEventListener("keydown", function(event) {
+  // Verificar si se presionó "Enter" (código de tecla 'Enter')
+  if (event.code === 'Enter' && document.getElementById("sub-title").value != "") {
+
+  // Crear un nuevo elemento de lista (li)
+  var li = document.createElement("li")
+    // Crear un nuevo elemento de lista (input)
+  var nuevoInput = document.createElement("input")
+  //crear label para la nueva elemento de la lista
+  var nuevoLabel = document.createElement("label")
+  //asigno las propiedades de los nuevos elementos
+  nuevoInput.type = "checkbox"
+  
+  nuevoLabel.textContent = document.getElementById("sub-title").value;
+  nuevoLabel.style.padding = "0 0 0 14px"
+  
+  //agrego los nuevos elementos a sus nodos correspondientes más sus características
+  li.appendChild(nuevoInput)
+  li.appendChild(nuevoLabel)
+  li.style.borderBottom = "1px solid #000000"
+  li.style.padding = "5px 5px 5px 10px"
+  li.className = "column"
+ 
+
+
+  // Agregar el nuevo elemento de lista a la lista existente
+  document.getElementById("lista").appendChild(li)
+
+
+  // Limpiar el contenido del textbox después de agregar el elemento
+  document.getElementById("sub-title").value = ""
+  }
+  cantidad();
+})
+
+
+
+function cantidad(){
+  //veo la cantidad de elementos que faltan marcar y cambio el valor del texto de cant
+  var elementosLi = document.querySelector("#lista")?.children;
+  
+  const cant = document.querySelector('.cant_item');
+  let texto = 0
+  for(var i = 0; i< elementosLi.length; i++){
+  if(elementosLi[i].firstChild.checked){
+    elementosLi[i].style.textDecoration = "line-through";
+  }else{
+    texto++;
+    elementosLi[i].style.textDecoration = "none";
+  }
+  }
+  cant.innerHTML = parseInt(texto ) + " left to do";
+}
+
+//cada vez que se presione la pantalla se actualiza el valor del h6 cantidad
+document.querySelector('body').addEventListener('click', function() {
+    cantidad();
+});
+/*document.querySelector("#sub-title")?.addEventListener('click', () => {
+  var elementosLi = document.querySelector("#lista");
+  if(elementosLi.style.display = "flex"){
+    elementosLi.style.display = "none";
+  } else{elementosLi.style.display = "flex"}
+  
+})*/
+</script>
+  
+
