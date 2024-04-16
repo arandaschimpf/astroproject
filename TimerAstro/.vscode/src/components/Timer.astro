@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Timer</title>
+  <style>
+    body {
+      font-family: Helvetica, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: burlywood;
+    }
+
+    h1 {
+      color: black;
+    }
+
+    .timer-container {
+      display: flex;
+      align-items: center;
+      font-size: 2rem;
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .timer-container div {
+      margin: 0 5px;
+    }
+
+    .progress-ring {
+      width: 200px;
+      height: 200px;
+      position: relative;
+    }
+
+    .progress-ring .progress-ring__circle {
+      stroke: white;
+      stroke-width: 4;
+      fill: transparent;
+      r: 90;
+      cx: 100;
+      cy: 100;
+    }
+
+    .progress-ring .progress-ring__circle--background {
+      stroke: rgba(255, 255, 255, 0.2);
+    }
+
+    #startButton {
+      position: absolute;
+      top: 170%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1rem;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Timer</h1>
+  <svg class="progress-ring">
+    <circle class="progress-ring__circle progress-ring__circle--background" />
+    <circle class="progress-ring__circle" stroke-dasharray="0 565.48" /> <!-- Circunferencia completa del círculo (2 * PI * radio) -->
+    <foreignObject x="0" y="0" width="200" height="200">
+      <div class="timer-container">
+        <div id="minutes">00</div>
+        <div>:</div>
+        <div id="seconds">15</div>
+        <button id="startButton">Start</button>
+      </div>
+    </foreignObject>
+  </svg>
+
+  <script>
+    let totalTime = 15; // Tiempo total en segundos (15 segundos)
+    let timeLeft = totalTime;
+    let timerInterval;
+    let progress = 0;
+    let circle = document.querySelector('.progress-ring__circle');
+
+    const startButton = document.getElementById('startButton');
+    const minutesDisplay = document.getElementById('minutes');
+    const secondsDisplay = document.getElementById('seconds');
+
+    function startTimer() {
+      timerInterval = setInterval(updateTimer, 1000);
+    }
+
+    function updateTimer() {
+      timeLeft--;
+      progress = ((totalTime - timeLeft) / totalTime) * 100;
+      circle.style.strokeDasharray = `${progress * 5.6548} 565.48`; // Calculamos la longitud del trazo en base al porcentaje de progreso y la circunferencia del círculo
+      minutesDisplay.textContent = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+      secondsDisplay.textContent = (timeLeft % 60).toString().padStart(2, '0');
+      if (timeLeft === 0) {
+        clearInterval(timerInterval);
+        startButton.disabled = false;
+      }
+    }
+
+    startButton.addEventListener('click', () => {
+      if (!timerInterval) {
+        startTimer();
+        startButton.disabled = true;
+      }
+    });
+  </script>
+</body>
+</html>
