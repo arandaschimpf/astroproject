@@ -1,0 +1,234 @@
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista "To Do"</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <header>Adriel San Martin</header>
+
+    <h1>Por hacer</h1>
+
+    <div class="subt-container">˅ ¿Que necesita ser hecho?</div>
+
+    <div id="myDIV" class="adder">
+        <input type="text" id="myInput" placeholder="Title..." />
+        <span onclick="newElement()" class="addBtn">+</span>
+    </div>
+    <ul id="myUL">
+        <li>Ir al shopping</li>
+        <li class="checked">Comprar facturas</li>
+        <li>Agregar funcion a la app</li>
+        <li>Tarea</li>
+    </ul>
+
+    <div class="buttons-container">
+        Items restantes
+        <div class="selector-container-gral">
+            <div class="selector-container">Todos</div>
+            <div class="selector-container">Pendientes</div>
+            <div class="selector-container">Completados</div>
+        </div>
+        <button class="delete-container" onclick="borrarTareas()">Borrar</button>
+    </div>
+</body>
+
+<style>
+    .bg-zinc-200 {
+        --tw-bg-opacity: 1;
+        background-color: rgb(229, 229, 229);
+    }
+
+    body {
+        font: helvetica;
+    }
+
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: white;
+        padding: 10px 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    h1 {
+        color: rgb(221, 202, 202);
+        font-size: 58px;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .subt-container {
+        width: 700px;
+        border: 1px solid rgb(208, 208, 208);
+        padding: 10px;
+        background-color: white;
+        font-size: 28px;
+        padding-left: 20px;
+        padding-right: 20px;
+        color: rgb(208, 208, 208);
+        font-weight: 50;
+    }
+
+    .adder {
+        width: 700px;
+        border: 1px solid rgb(208, 208, 208);
+        padding: 10px;
+        background-color: white;
+        font-size: 28px;
+        padding-left: 20px;
+        padding-right: 20px;
+        font-weight: 50;
+        color: rgb(39, 36, 36);
+        display: flex;
+        align-items: center;
+    }
+
+    input {
+        margin: 0;
+        border: none;
+        border-radius: 0;
+        width: 85%;
+        float: left;
+        font-size: 28px;
+    }
+
+    .adder:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .addBtn {
+        margin-left: auto;
+    }
+
+    ul li {
+        width: 700px;
+        border: 1px solid rgb(208, 208, 208);
+        padding: 10px;
+        background-color: white;
+        font-size: 28px;
+        padding-left: 20px;
+        padding-right: 20px;
+        font-weight: 50;
+        color: rgb(39, 36, 36);
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    ul li:hover {
+        background: #ddd;
+    }
+
+    ul li.checked {
+        background: #888;
+        color: #fff;
+        text-decoration: line-through;
+    }
+
+    ul li.checked::before {
+        content: "";
+        position: absolute;
+        border-color: #fff;
+        border-style: solid;
+        border-width: 0 2px 2px 0;
+        top: 10px;
+        left: 16px;
+        transform: rotate(45deg);
+        height: 15px;
+        width: 7px;
+    }
+
+    .close{
+        color: aqua;
+    }
+
+    .buttons-container {
+        width: 700px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        background-color: white;
+        font-size: 14px;
+        color: rgb(103, 99, 99);
+        display: flex;
+        align-items: center;
+    }
+
+    .selector-container-gral {
+        display: inline-block;
+        margin-left: auto;
+    }
+
+    .selector-container {
+        border: 1px solid rgb(208, 208, 208);
+        padding: 10px;
+        display: inline-block;
+    }
+
+    .delete-container {
+        margin-left: auto;
+    }
+</style>
+
+<script>
+    // Create a "close" button and append it to each list item
+var myNodelist = document.getElementsByTagName("LI");
+var i;
+for (i = 0; i < myNodelist.length; i++) {
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  myNodelist[i].appendChild(span);
+}
+
+// Click on a close button to hide the current list item
+var close = document.getElementsByClassName("close");
+var i;
+for (i = 0; i < close.length; i++) {
+  close[i].onclick = function() {
+    var div = this.parentElement;
+    div.style.display = "none";
+  }
+}
+
+// Add a "checked" symbol when clicking on a list item
+var list = document.querySelector('ul');
+list.addEventListener('click', function(ev) {
+  if (ev.target.tagName === 'LI') {
+    ev.target.classList.toggle('checked');
+  }
+}, false);
+
+// Create a new list item when clicking on the "Add" button
+function newElement() {
+  var li = document.createElement("li");
+  var inputValue = document.getElementById("myInput").value;
+  var t = document.createTextNode(inputValue);
+  li.appendChild(t);
+  if (inputValue === '') {
+    alert("You must write something!");
+  } else {
+    document.getElementById("myUL").appendChild(li);
+  }
+  document.getElementById("myInput").value = "";
+
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  li.appendChild(span);
+
+  for (i = 0; i < close.length; i++) {
+    close[i].onclick = function() {
+      var div = this.parentElement;
+      div.style.display = "none";
+    }
+  }
+}
+</script>

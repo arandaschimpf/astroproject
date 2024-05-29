@@ -2,9 +2,10 @@
 import Layout from "../layouts/Layout.astro"
 import ImageCard from '../components/ImageCard.astro'
 import Timer from "../components/Timer.astro"
+import List from '../components/List.astro'
 const id = Astro.params.id ?? '1'
 ---
 
-<Layout title="Pagina">
-  <Timer id={id}/>
+<Layout title="Lista">
+  <List id={id}/>
 </Layout>
