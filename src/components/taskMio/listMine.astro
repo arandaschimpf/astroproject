@@ -32,6 +32,11 @@ const tasks = await getTaskList()
             <button class="but_inf bg-aqua" id="all">All</button>
             <button class="but_inf" id="active">Active</button>
             <button class="but_inf" id="completed">completed</button>
+            {tasks.map(task => (
+              <li>
+                <label>{task.title}</label>
+                </li>
+            ))}
           </div>
           <button class="clear-completed">Clear Completed</button>
         </div>
@@ -42,7 +47,7 @@ const tasks = await getTaskList()
 </section>
 
 </section>
-
+<!-- 
 <style>
 
   body{
@@ -165,10 +170,11 @@ const tasks = await getTaskList()
 <script>
   //Si presiono el botón active se cumpla la function active
 const buttonActive = document.querySelector('#active')
-buttonActive?.addEventListener("click",() => {
-  active();
+buttonActive?.addEventListener("click",active)
 
-})
+const ejemplo = (event) => {
+  event.target.style.backgroundColor= "red";
+}
 function active(){
   //recorro las listas y veo los elementos que no están checkeados
   var listas = document.querySelector("#lista")?.children;
@@ -245,7 +251,7 @@ document.getElementById("sub-title")?.addEventListener("keydown", function(event
   var li = document.createElement("li")
     // Crear un nuevo elemento de lista (input)
   var nuevoInput = document.createElement("input")
-  //crear label para la nueva elemento de la lista
+  crear label para la nueva elemento de la lista
   var nuevoLabel = document.createElement("label")
   //asigno las propiedades de los nuevos elementos
   nuevoInput.type = "checkbox"
@@ -295,13 +301,14 @@ function cantidad(){
 document.querySelector('body').addEventListener('click', function() {
     cantidad();
 });
-/*document.querySelector("#sub-title")?.addEventListener('click', () => {
+document.querySelector("#sub-title")?.addEventListener('click', () => {
   var elementosLi = document.querySelector("#lista");
   if(elementosLi.style.display = "flex"){
     elementosLi.style.display = "none";
   } else{elementosLi.style.display = "flex"}
   
-})*/
+})
 </script>
   
 
+ -->

@@ -1,9 +1,13 @@
+import { title } from "process"
+
 export type Task = {
     id:number,
     title:string,
     completed:boolean
 }
-const taskList: Task[] = []
+const taskList: Task[] = [
+  {id:1, title: 'rutina', completed: true,}
+]
 
 
 export const getTaskList = async () => {
